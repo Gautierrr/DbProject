@@ -2,3 +2,5 @@
 
 libmysql.lib
 libmysql.dll
+
+main.h

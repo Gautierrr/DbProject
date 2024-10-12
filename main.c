@@ -1,23 +1,47 @@
-#include "mysql/include/mysql.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
 
-int main() {
+MYSQL *conn;
+MYSQL_RES *result;
+MYSQL_ROW row;
 
-    MYSQL *conn = mysql_init(NULL);
+void get_password(char *password, size_t size) {
+    printf("Entrez le mot de passe : ");
+    fgets(password, size, stdin);
+    password[strcspn(password, "\n")] = 0; // supp le saut de ligne a la fin du password
+}
+
+bool connect_to_database() {
+    char password[PASSWORD_SIZE];
+
+    get_password(password, PASSWORD_SIZE);
+
+    conn = mysql_init(NULL);
 
     if (conn == NULL) {
         fprintf(stderr, "mysql_init() failed\n");
-        return EXIT_FAILURE;
-    } 
-
-    if (mysql_real_connect(conn, "localhost", "", "", "dbproject", 3306, NULL, 0)) {
-        
-        printf("T un boss");
-
-        mysql_close(conn);
-    } else {
-        printf("T une merde");
+        exit(EXIT_FAILURE);
     }
 
+    if (mysql_real_connect(conn, "localhost", "legaug", password, "dbproject", 3306, NULL, 0) == NULL) {
+        fprintf(stderr, "mysql_real_connect() failed\n");
+        mysql_close(conn);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void close_database_connection() {
+    if (conn != NULL) {
+        mysql_close(conn);
+    }
+}
+
+int main(int argc, char *args[]) {
+    if (connect_to_database()) {
+        display_main_menu();
+    } else {
+        printf("Échec de la connexion à la base de données.\n");
+    }
+
+    close_database_connection();
+    return EXIT_SUCCESS;
 }

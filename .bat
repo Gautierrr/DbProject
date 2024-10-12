@@ -1,1 +1,1 @@
-gcc -o main main.c libmysql.lib
+gcc -o main main.c src/mainMenu.c libmysql.lib
