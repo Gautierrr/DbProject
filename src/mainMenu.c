@@ -1,6 +1,6 @@
 #include "../main.h"
 
-void display_main_menu() {
+void display_main_menu(MYSQL *conn) {
     int option;
 
     do {
@@ -14,14 +14,18 @@ void display_main_menu() {
         printf("======================\n\n\n");
 
         printf("Veuillez choisir une option: ");
-        scanf("%d", &option);
+        
+        if (scanf("%d", &option) != 1) { // verif si un char est saisi au lieu d'un int
+            while (getchar() != '\n');
+            option = 0;
+        }
 
         switch (option) {
             case 1:
-                show_championship_types();
+                show_championship_types(conn);
                 break;
             case 2:
-                add_championship();
+                add_championship(conn);
                 break;
             case 3:
                 modify_championship();
@@ -38,5 +42,5 @@ void display_main_menu() {
             default:
                 printf("Option invalide, veuillez reessayer.\n");
         }
-    } while (option != 6);
+    } while (option < 1 || option > 6);
 }

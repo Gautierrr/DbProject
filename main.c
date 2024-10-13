@@ -18,12 +18,12 @@ bool connect_to_database() {
     conn = mysql_init(NULL);
 
     if (conn == NULL) {
-        fprintf(stderr, "mysql_init() failed\n");
+        fprintf(stderr, "Echec de la connexion a la base de donnees.\n");
         exit(EXIT_FAILURE);
     }
 
     if (mysql_real_connect(conn, "localhost", "legaug", password, "dbproject", 3306, NULL, 0) == NULL) {
-        fprintf(stderr, "mysql_real_connect() failed\n");
+        fprintf(stderr, "Echec de la connexion a la base de donnees.\n");
         mysql_close(conn);
         exit(EXIT_FAILURE);
     }
@@ -37,9 +37,9 @@ void close_database_connection() {
 
 int main(int argc, char *args[]) {
     if (connect_to_database()) {
-        display_main_menu();
+        display_main_menu(conn);
     } else {
-        printf("Échec de la connexion à la base de données.\n");
+        printf("Echec de la connexion a la base de donnees.\n");
     }
 
     close_database_connection();
