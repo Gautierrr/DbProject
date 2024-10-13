@@ -15,7 +15,8 @@ void show_championship_types(MYSQL *conn) {
     }
 
     mysql_free_result(result);
-
-    // mettre en place : attendre que le user appuie sur entree pour réafficher le menu principal
+    printf("\nAppuyez sur entree pour revenir au menu principal...");
+    getchar();
+    getchar();
     display_main_menu(conn);
 }

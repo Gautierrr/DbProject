@@ -11,7 +11,7 @@ void display_main_menu(MYSQL *conn) {
         printf("4. Supprimer un type de championnat\n");
         printf("5. Selectionner un championnat\n");
         printf("6. Quitter\n");
-        printf("======================\n\n\n");
+        printf("========================\n\n\n");
 
         printf("Veuillez choisir une option: ");
         
@@ -28,10 +28,10 @@ void display_main_menu(MYSQL *conn) {
                 add_championship(conn);
                 break;
             case 3:
-                modify_championship();
+                modify_championship(conn);
                 break;
             case 4:
-                delete_championship();
+                delete_championship(conn);
                 break;
             case 5:
                 menu_select_championship();

@@ -17,8 +17,8 @@ void close_database_connection();
 void display_main_menu(MYSQL *conn);
 void show_championship_types(MYSQL *conn);
 void add_championship(MYSQL *conn);
-void modify_championship();
-void delete_championship();
+void modify_championship(MYSQL *conn);
+void delete_championship(MYSQL *conn);
 void menu_select_championship();
 
 typedef struct Player {
