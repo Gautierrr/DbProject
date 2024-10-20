@@ -1,1 +1,1 @@
-gcc -o main main.c src/mainMenu.c src/show_championship_types.c src/add_championship.c src/delete_championship.c src/modify_championship.c src/menu_select_championship.c libmysql.lib
+gcc -o main main.c 
