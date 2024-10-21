@@ -1,4 +1,4 @@
-gcc -o main main.c src/create_championship.c src/main_menu.c src/add_team.c src/team_balancing.c src/save_binary_tree.c
+gcc -o main main.c src/create_championship.c src/main_menu.c src/add_team.c src/team_balancing.c src/save_binary_tree.c src/display_binary_tree.c
 
 
 

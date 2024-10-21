@@ -75,7 +75,7 @@ int create_championship() {
 
         free(name);
 
-        main_menu(&root);
+        main_menu(&root, name);
     }
 
     return 0;

@@ -1,3 +1,10 @@
 notes.txt
 
 CC1.pdf
+
+src/insert_team.c
+src/insert_exemple.c
+src/main_menu_exemple.c
+src/player_balancing.c
+
+db/

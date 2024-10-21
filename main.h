@@ -52,7 +52,7 @@ char* championship_name();
 int file_exist(const char *filepath);
 void create_json_file(char **name);
 int create_championship();
-void main_menu(Team** root);
+void main_menu(Team** root, const char* championship_file);
 
 // team
 int height_team(Team* n);
@@ -62,9 +62,10 @@ void add_team(Team** root);
 Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
 int get_balance_team(Team* n);
+void displayTree(Team* root, int space);
 
 // save
-void save_binary_tree(Team* root);
+void save_binary_tree(Team* root, const char* file);
 
 
 

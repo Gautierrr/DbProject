@@ -1,8 +1,5 @@
 #include "../main.h"
 
-// modifier pour si on save une 2e fois apres avoir deja save alors cela charge le fichier .json et le réorganise avec les bonnes données
-// inserer dans le fichier correspondant name = championship
-
 void save_tree_to_file(Team* root, FILE* file) {
     if (root != NULL) {
         fprintf(file, "{\n");
@@ -23,16 +20,20 @@ void save_tree_to_file(Team* root, FILE* file) {
     }
 }
 
-void save_binary_tree(Team* root) {
-    FILE* file = fopen("db/binary_tree.json", "w");
+void save_binary_tree(Team* root, const char* championship_file) {
+    char filepath[50];
+    snprintf(filepath, sizeof(filepath), "db/%s.json", championship_file);
+
+    FILE* file = fopen(filepath, "w");
     if (file == NULL) {
-        printf("Error opening file for writing.\n");
+        printf("Error opening file for writing: %s\n", filepath);
         return;
     }
+
     fprintf(file, "{\n\"teams\": ");
     save_tree_to_file(root, file);
     fprintf(file, "\n}\n");
 
     fclose(file);
-    printf("Tree saved to db/binary_tree.json successfully.\n");
+    printf("Binary tree saved to %s successfully.\n", filepath);
 }

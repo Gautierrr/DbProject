@@ -1,6 +1,6 @@
 #include "../main.h"
 
-void main_menu(Team** root) {
+void main_menu(Team** root, const char* championship_file) {
     int option;
 
     do {        
@@ -23,6 +23,7 @@ void main_menu(Team** root) {
 
         switch (option) {
             case 1:
+                displayTree(*root, 0);
                 break;
             case 2:
                 add_team(root);
@@ -32,7 +33,7 @@ void main_menu(Team** root) {
             case 4:
                 break;
             case 5:
-                save_binary_tree(*root);
+                save_binary_tree(*root, championship_file);
                 option = 7;
                 break;
             case 6:

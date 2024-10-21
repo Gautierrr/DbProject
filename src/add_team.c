@@ -1,7 +1,5 @@
 #include "../main.h"
 
-// modifier pour etre sur que le user entre bien des int ect
-
 Team* create_new_team() {
     Team* new_team = (Team*)malloc(sizeof(Team));
     if (new_team == NULL) {
@@ -10,7 +8,10 @@ Team* create_new_team() {
     }
 
     printf("Enter team ID: ");
-    scanf("%d", &new_team->id);
+    while (scanf("%d", &new_team->id) != 1) {
+        printf("Invalid input. Please enter a valid team ID : ");
+        while (getchar() != '\n');
+    }
     getchar();
 
     printf("Enter team name: ");
@@ -21,21 +22,63 @@ Team* create_new_team() {
     }
 
     printf("Enter number of trophies: ");
-    scanf("%d", &new_team->trophies);
+    while (scanf("%d", &new_team->trophies) != 1) {
+        printf("Invalid input. Please enter a valid number of trophies : ");
+        while (getchar() != '\n');
+    }
 
     printf("Enter number of wins: ");
-    scanf("%d", &new_team->win);
+    while (scanf("%d", &new_team->win) != 1) {
+        printf("Invalid input. Please enter a valid number of wins : ");
+        while (getchar() != '\n');
+    }
 
     printf("Enter number of equalities: ");
-    scanf("%d", &new_team->equality);
+    while (scanf("%d", &new_team->equality) != 1) {
+        printf("Invalid input. Please enter a valid number of equalities : ");
+        while (getchar() != '\n');
+    }
 
     printf("Enter number of defeats: ");
-    scanf("%d", &new_team->defeat);
+    while (scanf("%d", &new_team->defeat) != 1) {
+        printf("Invalid input. Please enter a valid number of defeats : ");
+        while (getchar() != '\n');
+    }
 
     new_team->left = new_team->right = NULL;
     new_team->height = 1;
 
     return new_team;
+}
+
+int check_id(Team* node, int id) {
+    if (node == NULL) {
+        return 0;
+    }
+
+    if (id == node->id) {
+        return 1;  // id already exist
+    } else if (id < node->id) {
+        return check_id(node->left, id);
+    } else {
+        return check_id(node->right, id);
+    }
+}
+
+int check_name(Team* node, const char* name) {
+    if (node == NULL) {
+        return 0;
+    }
+
+    if (strcmp(name, node->name) == 0) {
+        return 1;  // name already exist
+    } 
+    
+    if (check_name(node->left, name) || check_name(node->right, name)) {
+        return 1;
+    }
+
+    return 0;
 }
 
 Team* insert_team(Team* node, Team* new_team) {
@@ -48,8 +91,6 @@ Team* insert_team(Team* node, Team* new_team) {
     } else if (new_team->id > node->id) {
         node->right = insert_team(node->right, new_team);
     } else {
-        printf("A team with ID %d already exists.\n", new_team->id);
-        free(new_team);
         return node;
     }
 
@@ -79,9 +120,23 @@ Team* insert_team(Team* node, Team* new_team) {
 void add_team(Team** root) {
     Team* new_team = create_new_team();
     if (new_team != NULL) {
-        *root = insert_team(*root, new_team);
-        printf("Team added successfully!\n");
+        int id = check_id(*root, new_team->id);
+        int name = check_name(*root, new_team->name);
+        
+        if (id == 0 && name == 0) {
+            *root = insert_team(*root, new_team);
+            printf("Team added successfully!\n");
+        } else {
+            if (id) {
+                printf("Failed to add team: ID already exist.\n");
+            }
+            
+            if (name) {
+                printf("Failed to add team: Name already exist.\n");
+            }
+            free(new_team);
+        }
     } else {
-        printf("Failed to add team.\n");
+        printf("Failed to create team.\n");
     }
 }
