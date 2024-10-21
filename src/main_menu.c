@@ -1,41 +1,10 @@
 #include "../main.h"
 
-char* championship_name() {
-    char *name = malloc(20 * sizeof(char));
-    if (name == NULL) {
-        printf("Memory allocation error.\n");
-        return NULL;
-    }
-
-    size_t len;
-
-    do {
-        printf("Please enter the name of the championship : ");
-        fgets(name, 20, stdin);
-
-        len = strlen(name);
-
-        if (len > 0 && name[len - 1] == '\n') {
-            name[len - 1] = '\0';
-        }
-
-        if (strlen(name) == 0) {
-            printf("\nYou have not entered a name. Please try again.\n");
-        }
-
-    } while (strlen(name) == 0);
-
-    return name;
-}
-
 void main_menu() {
     int option;
-    char *championshipName;
 
-    do {
-        championshipName = championship_name();
-        
-        printf("\n\n\n==== Main menu of %s ====\n", championshipName);
+    do {        
+        printf("\n\n\n====== Main menu ======\n");
         printf("1. See the existing teams\n");
         printf("2. Add a team\n");
         printf("3. Edit a team\n");
@@ -70,6 +39,4 @@ void main_menu() {
                 printf("Invalid option, please try again.\n");
         }
     } while (option < 1 || option > 6);
-
-    free(championshipName);
 }

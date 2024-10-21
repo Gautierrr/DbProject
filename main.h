@@ -45,9 +45,16 @@ typedef struct Node {
     struct Node* right;
 } Node;
 
-char* championship_name();
-void main_menu();
 int max(int a, int b);
+
+// championship
+char* championship_name();
+int file_exist(const char *filepath);
+void create_json_file(char **name);
+int create_championship();
+void main_menu();
+
+
 
 // team
 int heightTeam(Team* n);

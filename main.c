@@ -35,7 +35,8 @@ int main(int argc, char *args[]) {
             case 3:
                 // Appeler la fonction permettant de créer un championnat, en premier fonction qui demande le nom du championnat a créer
                 // main_menu();
-                insert_exemple();
+                // insert_exemple();
+                create_championship();
                 break;
             case 4:
                 printf("Bye bye ...\n");
