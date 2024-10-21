@@ -1,6 +1,6 @@
 #include "../main.h"
 
-void main_menu() {
+void main_menu(Team** root) {
     int option;
 
     do {        
@@ -9,13 +9,14 @@ void main_menu() {
         printf("2. Add a team\n");
         printf("3. Edit a team\n");
         printf("4. Delete a team\n");
-        printf("5. See the players interface\n");
-        printf("6. Exit\n");
+        printf("5. Save the Binary Tree and exit...\n");
+        printf("6. See the players interface\n");
+        printf("7. Exit\n");
         printf("========================\n\n\n");
 
         printf("Please choose an option : ");
         
-        if (scanf("%d", &option) != 1) { // verif si un char est saisi au lieu d'un int
+        if (scanf("%d", &option) != 1) {
             while (getchar() != '\n');
             option = 0;
         }
@@ -24,19 +25,23 @@ void main_menu() {
             case 1:
                 break;
             case 2:
-                insert_exemple();
+                add_team(root);
                 break;
             case 3:
                 break;
             case 4:
                 break;
             case 5:
+                save_binary_tree(*root);
+                option = 7;
                 break;
             case 6:
+                break;
+            case 7:
                 printf("Bye bye ...\n");
                 break;
             default:
                 printf("Invalid option, please try again.\n");
         }
-    } while (option < 1 || option > 6);
+    } while (option != 7);
 }

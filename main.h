@@ -52,15 +52,26 @@ char* championship_name();
 int file_exist(const char *filepath);
 void create_json_file(char **name);
 int create_championship();
-void main_menu();
-
-
+void main_menu(Team** root);
 
 // team
-int heightTeam(Team* n);
-Team* rightRotateTeam(Team* y);
-Team* leftRotateTeam(Team* x);
-int getBalanceTeam(Team* n);
+int height_team(Team* n);
+Team* create_new_team();
+Team* insert_team(Team* node, Team* new_team);
+void add_team(Team** root);
+Team* right_rotate_team(Team* y);
+Team* left_rotate_team(Team* x);
+int get_balance_team(Team* n);
+
+// save
+void save_binary_tree(Team* root);
+
+
+
+
+
+/*
+// team
 Team* insertTeam(Team* node, int id, char name[], int trophies, int win, int equality, int defeat);
 void displayInOrder(Team* node);
 void displayTree(Team* root, int space);
@@ -74,7 +85,7 @@ int heightPlayer(Player* n);
 Player* rightRotatePlayer(Player* y);
 Player* leftRotatePlayer(Player* x);
 int getBalancePlayer(Player* n);
-
+*/
 
 
 

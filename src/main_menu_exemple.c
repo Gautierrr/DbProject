@@ -32,7 +32,7 @@ void main_menu_exemple(Team* root) {
                 displayTree(root, 0);
                 break;
             case 2: {
-                FILE* file = fopen("tree_data.txt", "w");
+                FILE* file = fopen("premierleague.json", "w");
                 if (file == NULL) {
                     printf("Erreur lors de l'ouverture du fichier pour la sauvegarde.\n");
                     break;

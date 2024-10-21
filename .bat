@@ -1,6 +1,6 @@
-gcc -o main main.c src/create_championship.c src/main_menu.c src/team_balancing.c src/insert_team.c src/insert_exemple.c src/main_menu_exemple.c
+gcc -o main main.c src/create_championship.c src/main_menu.c src/add_team.c src/team_balancing.c src/save_binary_tree.c
 
 
 
 
-:: comment
+:: comment  src/insert_team.c src/insert_exemple.c src/main_menu_exemple.c

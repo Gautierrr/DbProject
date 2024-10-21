@@ -68,12 +68,14 @@ void create_json_file(char **name_ptr) {
 
 int create_championship() {
     char *name = championship_name();
+    Team* root = NULL;
+    
     if (name != NULL) {
         create_json_file(&name);
 
         free(name);
 
-        main_menu();
+        main_menu(&root);
     }
 
     return 0;
