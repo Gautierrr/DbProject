@@ -63,6 +63,9 @@ Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
 int get_balance_team(Team* n);
 void displayTree(Team* root, int space);
+Team* search_team(Team* root, const char* query);
+void delete_team(Team** root);
+void edit_team(Team** root);
 
 // save
 void save_binary_tree(Team* root, const char* file);

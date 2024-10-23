@@ -1,23 +1,29 @@
 #include "../main.h"
 
-void save_tree_to_file(Team* root, FILE* file) {
-    if (root != NULL) {
-        fprintf(file, "{\n");
-        fprintf(file, "\"id\": %d,\n", root->id);
-        fprintf(file, "\"name\": \"%s\",\n", root->name);
-        fprintf(file, "\"trophies\": %d,\n", root->trophies);
-        fprintf(file, "\"win\": %d,\n", root->win);
-        fprintf(file, "\"equality\": %d,\n", root->equality);
-        fprintf(file, "\"defeat\": %d,\n", root->defeat);
-
-        fprintf(file, "\"left\": ");
-        save_tree_to_file(root->left, file);
-        fprintf(file, ",\n\"right\": ");
-        save_tree_to_file(root->right, file);
-        fprintf(file, "}\n");
-    } else {
-        fprintf(file, "null");
+void save_team_to_file(Team* team, FILE* file) {
+    if (team != NULL) {
+        fprintf(file, "    {\n");
+        fprintf(file, "        \"id\": %d,\n", team->id);
+        fprintf(file, "        \"name\": \"%s\",\n", team->name);
+        fprintf(file, "        \"trophies\": %d,\n", team->trophies);
+        fprintf(file, "        \"win\": %d,\n", team->win);
+        fprintf(file, "        \"equality\": %d,\n", team->equality);
+        fprintf(file, "        \"defeat\": %d\n", team->defeat);
+        fprintf(file, "    }");
     }
+}
+
+void save_teams_to_file(Team* root, FILE* file) {
+    if (root == NULL) {
+        return;
+    }
+
+    save_teams_to_file(root->left, file);
+
+    save_team_to_file(root, file);
+    fprintf(file, ",\n");
+
+    save_teams_to_file(root->right, file);
 }
 
 void save_binary_tree(Team* root, const char* championship_file) {
@@ -30,10 +36,13 @@ void save_binary_tree(Team* root, const char* championship_file) {
         return;
     }
 
-    fprintf(file, "{\n\"teams\": ");
-    save_tree_to_file(root, file);
-    fprintf(file, "\n}\n");
+    fprintf(file, "{\n  \"teams\": [\n");
+
+    save_teams_to_file(root, file);
+
+    fseek(file, -3, SEEK_CUR);
+    fprintf(file, "\n  ]\n}\n");
 
     fclose(file);
-    printf("Binary tree saved to %s successfully.\n", filepath);
+    printf("Teams saved to %s successfully.\n", filepath);
 }

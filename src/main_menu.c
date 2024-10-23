@@ -29,8 +29,10 @@ void main_menu(Team** root, const char* championship_file) {
                 add_team(root);
                 break;
             case 3:
+                edit_team(root);
                 break;
             case 4:
+                delete_team(root);
                 break;
             case 5:
                 save_binary_tree(*root, championship_file);
