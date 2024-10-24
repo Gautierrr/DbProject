@@ -81,6 +81,6 @@ int get_balance_player(Player* n);
 
 
 // save
-void save_binary_tree(Team* root, const char* file);
+void save_teams_and_players(Team* root, const char* championship_file);
 
 #endif

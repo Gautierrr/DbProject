@@ -10,8 +10,7 @@ void menu_player(Team** root, const char* championship_file) {
         printf("3. Add a player\n");
         printf("4. Edit a player\n");
         printf("5. Delete a player\n");
-        printf("6. Save new players and return to teams interface\n");
-        printf("7. Return to teams interface\n");
+        printf("6. Return to teams interface to save\n");
         printf("========================\n\n\n");
 
         printf("Please choose an option : ");
@@ -34,13 +33,9 @@ void menu_player(Team** root, const char* championship_file) {
             case 5:
                 break;
             case 6:
-                // save_binary_tree(*root, championship_file); // add une option genre si a = 1 alors save team et si a = 2 alors save player
-                option = 7;
-                break;
-            case 7:
                 return;
             default:
                 printf("Invalid option, please try again.\n");
         }
-    } while (option != 7);
+    } while (option != 6);
 }

@@ -42,7 +42,7 @@ void main_menu(Team** root, const char* championship_file) {
                 menu_player(root, championship_file);
                 break;
             case 7:
-                save_binary_tree(*root, championship_file);
+                save_teams_and_players(*root, championship_file);
                 option = 8;
                 break;
             case 8:
