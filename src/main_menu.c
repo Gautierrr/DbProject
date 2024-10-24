@@ -6,12 +6,13 @@ void main_menu(Team** root, const char* championship_file) {
     do {        
         printf("\n\n\n====== Main menu ======\n");
         printf("1. See the existing teams\n");
-        printf("2. Add a team\n");
-        printf("3. Edit a team\n");
-        printf("4. Delete a team\n");
-        printf("5. Save the Binary Tree and exit...\n");
+        printf("2. Select a team\n");
+        printf("3. Add a team\n");
+        printf("4. Edit a team\n");
+        printf("5. Delete a team\n");
         printf("6. See the players interface\n");
-        printf("7. Exit\n");
+        printf("7. Save the Binary Tree and exit...\n");
+        printf("8. Exit\n");
         printf("========================\n\n\n");
 
         printf("Please choose an option : ");
@@ -26,25 +27,29 @@ void main_menu(Team** root, const char* championship_file) {
                 displayTree(*root, 0);
                 break;
             case 2:
-                add_team(root);
+                // select team
                 break;
             case 3:
-                edit_team(root);
+                add_team(root);
                 break;
             case 4:
-                delete_team(root);
+                edit_team(root);
                 break;
             case 5:
-                save_binary_tree(*root, championship_file);
-                option = 7;
+                delete_team(root);
                 break;
             case 6:
+                menu_player(root, championship_file);
                 break;
             case 7:
+                save_binary_tree(*root, championship_file);
+                option = 8;
+                break;
+            case 8:
                 printf("Bye bye ...\n");
                 break;
             default:
                 printf("Invalid option, please try again.\n");
         }
-    } while (option != 7);
+    } while (option != 8);
 }

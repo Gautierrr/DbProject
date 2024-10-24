@@ -11,7 +11,7 @@ typedef struct Championship {
 } Championship;
 
 typedef struct Player {
-    int id;
+    char id[10];
     char name[20];
     int age;
     int goals;
@@ -29,21 +29,23 @@ typedef struct Team {
     int win;
     int equality;
     int defeat;
+    int playerCount;
+    struct Player* playersRoot;
     struct Team* left;
     struct Team* right;
     int height;
 } Team;
 
-typedef struct Node {
-    int type; // 1 = championship, 2 = team, 3 = player
-    union {
-        Championship championship;
-        Team team;
-        Player player;
-    };
-    struct Node* left;
-    struct Node* right;
-} Node;
+// typedef struct Node {
+//     int type; // 1 = championship, 2 = team, 3 = player
+//     union {
+//         Championship championship;
+//         Team team;
+//         Player player;
+//     };
+//     struct Node* left;
+//     struct Node* right;
+// } Node;
 
 int max(int a, int b);
 
@@ -67,31 +69,18 @@ Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
 
+// player
+void menu_player(Team** root, const char* championship_file);
+void add_player(Team* root);
+int height_player(Player* n);
+Player* right_rotate_player(Player* y);
+Player* left_rotate_player(Player* x);
+int get_balance_player(Player* n);
+
+
+
+
 // save
 void save_binary_tree(Team* root, const char* file);
-
-
-
-
-
-/*
-// team
-Team* insertTeam(Team* node, int id, char name[], int trophies, int win, int equality, int defeat);
-void displayInOrder(Team* node);
-void displayTree(Team* root, int space);
-int insert_exemple(); // juste un exemple d'insertion
-void main_menu_exemple(Team* root); // juste un exemple d'insertion
-void saveTreeToFile(Team* node, FILE* file); // reprendre si bonne
-void freeTree(Team* root); // reprendre si bonne
-
-// player
-int heightPlayer(Player* n);
-Player* rightRotatePlayer(Player* y);
-Player* leftRotatePlayer(Player* x);
-int getBalancePlayer(Player* n);
-*/
-
-
-
 
 #endif

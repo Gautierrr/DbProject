@@ -1,5 +1,7 @@
 #include "../main.h"
 
+static int team_count = 0;
+
 Team* create_new_team() {
     Team* new_team = (Team*)malloc(sizeof(Team));
     if (new_team == NULL) {
@@ -7,13 +9,12 @@ Team* create_new_team() {
         return NULL;
     }
 
-    printf("Enter team ID: ");
-    while (scanf("%d", &new_team->id) != 1) {
-        printf("Invalid input. Please enter a valid team ID : ");
-        while (getchar() != '\n');
-    }
-    getchar();
+    team_count++;
+    new_team->id = team_count; // unique id
+    new_team->playerCount = 0;
+    new_team->playersRoot = NULL;
 
+    getchar();
     printf("Enter team name: ");
     fgets(new_team->name, sizeof(new_team->name), stdin);
     size_t len = strlen(new_team->name);
