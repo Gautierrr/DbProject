@@ -6,7 +6,7 @@ void main_menu(Team** root, const char* championship_file) {
     do {        
         printf("\n\n\n====== Main menu ======\n");
         printf("1. See the existing teams\n");
-        printf("2. Select a team\n");
+        printf("2. Show a team\n");
         printf("3. Add a team\n");
         printf("4. Edit a team\n");
         printf("5. Delete a team\n");
@@ -27,7 +27,7 @@ void main_menu(Team** root, const char* championship_file) {
                 displayTree(*root, 0);
                 break;
             case 2:
-                // select team
+                show_team(root);
                 break;
             case 3:
                 add_team(root);

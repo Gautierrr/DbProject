@@ -69,6 +69,7 @@ void displayTree(Team* root, int space);
 Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
+void show_team(Team** root);
 
 // player
 void menu_player(Team** root, const char* championship_file);
