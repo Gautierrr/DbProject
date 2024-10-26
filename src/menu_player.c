@@ -30,8 +30,10 @@ void menu_player(Team** root, const char* championship_file) {
                 add_player(*root);
                 break;
             case 4:
+                edit_player(root);
                 break;
             case 5:
+                delete_player(root,NULL);
                 break;
             case 6:
                 return;

@@ -80,6 +80,9 @@ Player* left_rotate_player(Player* x);
 int get_balance_player(Player* n);
 Player* search_player(Player* root, const char* query);
 void show_player(Team* team);
+void delete_player(Team** team_root, const char* player_query);
+void edit_player(Team** root);
+Player* insert_player(Player* root, Player* new_player);
 
 
 
