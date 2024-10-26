@@ -78,6 +78,8 @@ int height_player(Player* n);
 Player* right_rotate_player(Player* y);
 Player* left_rotate_player(Player* x);
 int get_balance_player(Player* n);
+Player* search_player(Player* root, const char* query);
+void show_player(Team* team);
 
 
 

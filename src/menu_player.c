@@ -6,7 +6,7 @@ void menu_player(Team** root, const char* championship_file) {
     do {        
         printf("\n\n\n====== Main menu ======\n");
         printf("1. See the existing players\n");
-        printf("2. Select a player\n");
+        printf("2. Show a player\n");
         printf("3. Add a player\n");
         printf("4. Edit a player\n");
         printf("5. Delete a player\n");
@@ -24,6 +24,7 @@ void menu_player(Team** root, const char* championship_file) {
             case 1:
                 break;
             case 2:
+                show_player(*root);
                 break;
             case 3:
                 add_player(*root);
