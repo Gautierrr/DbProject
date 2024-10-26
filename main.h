@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <dirent.h>
 
 typedef struct Championship {
     char name[20];
@@ -50,11 +51,11 @@ typedef struct Team {
 int max(int a, int b);
 
 // championship
-char* championship_name();
-int file_exist(const char *filepath);
-void create_json_file(char **name);
-int create_championship();
+void create_championship(const char *championshipName);
+void show_championships();
+void delete_championship(const char *championshipName);
 void main_menu(Team** root, const char* championship_file);
+int file_exist(const char *filepath);
 
 // team
 int height_team(Team* n);

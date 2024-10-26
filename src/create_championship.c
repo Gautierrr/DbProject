@@ -1,57 +1,36 @@
 #include "../main.h"
 
-char* championship_name() {
-    char *name = malloc(20 * sizeof(char));
-    if (name == NULL) {
-        printf("Memory allocation error.\n");
-        return NULL;
+/*
+int verify_password() {
+    char password[20];
+    printf("Enter password: ");
+    scanf("%19s", password);
+
+    if (strcmp(password, "password") == 0) {
+        printf("Password correct. Loading championship...\n");
+        return 1;
+    } else {
+        printf("Incorrect password.\n");
+        return 0;
     }
-
-    size_t len;
-
-    do {
-        printf("Please enter the name of the championship : ");
-        fgets(name, 20, stdin);
-
-        len = strlen(name);
-
-        if (len > 0 && name[len - 1] == '\n') {
-            name[len - 1] = '\0';
-        }
-
-        if (strlen(name) == 0) {
-            printf("\nYou have not entered a name. Please try again.\n");
-        }
-
-    } while (strlen(name) == 0);
-
-    return name;
 }
+*/
 
 int file_exist(const char *filepath) {
     FILE *file = fopen(filepath, "r");
     if (file != NULL) {
         fclose(file);
-        return 1;  // file already exist
+        return 1;
     }
     return 0;
 }
 
-void create_json_file(char **name_ptr) {
+void create_json_file(const char *name) {
     const char *directory = "db";
     char filepath[30];
 
     // db/name.json
-    snprintf(filepath, sizeof(filepath), "%s/%s.json", directory, *name_ptr);
-
-    while (file_exist(filepath)) {
-        printf("File '%s' already exists. Please choose a different name.\n", filepath);
-        
-        free(*name_ptr);
-        *name_ptr = championship_name();
-        
-        snprintf(filepath, sizeof(filepath), "%s/%s.json", directory, *name_ptr);
-    }
+    snprintf(filepath, sizeof(filepath), "%s/%s.json", directory, name);
 
     FILE *file = fopen(filepath, "w");
     if (file == NULL) {
@@ -59,24 +38,31 @@ void create_json_file(char **name_ptr) {
         return;
     }
 
-    fprintf(file, "{\n\t\"championship\": \"%s\"\n}\n", *name_ptr);
+    fprintf(file, "{\n\t\"championship\": \"%s\"\n}\n", name);
 
     fclose(file);
 
     printf("File '%s' created successfully.\n", filepath);
 }
 
-int create_championship() {
-    char *name = championship_name();
-    Team* root = NULL;
-    
-    if (name != NULL) {
-        create_json_file(&name);
 
-        free(name);
+void create_championship(const char *championshipName) {
+    char filepath[50];
+    snprintf(filepath, sizeof(filepath), "db/%s.json", championshipName);
 
-        main_menu(&root, name);
+    if (file_exist(filepath)) {
+        printf("Championship '%s' already exists.\n", championshipName);
+        /*if (verify_password()) {
+            // Charger les données du championnat
+            printf("Championship '%s' loaded successfully.\n", championshipName);
+        } else {
+            printf("Failed to load championship '%s'.\n", championshipName);
+        }*/
+    } else {
+        Team* root = NULL;
+
+        printf("Creating new championship '%s'.\n", championshipName);
+        create_json_file(championshipName);
+        main_menu(&root, championshipName);
     }
-
-    return 0;
 }
