@@ -65,7 +65,7 @@ void add_team(Team** root);
 Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
 int get_balance_team(Team* n);
-void displayTree(Team* root, int space);
+void displayTeamTree(Team* root, int space);
 Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
@@ -83,6 +83,7 @@ void show_player(Team* team);
 void delete_player(Team** team_root, const char* player_query);
 void edit_player(Team** root);
 Player* insert_player(Player* root, Player* new_player);
+void displayPlayerTree(Player* root, int space);
 
 
 

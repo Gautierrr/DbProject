@@ -24,7 +24,7 @@ void main_menu(Team** root, const char* championship_file) {
 
         switch (option) {
             case 1:
-                displayTree(*root, 0);
+                displayTeamTree(*root, 0);
                 break;
             case 2:
                 show_team(root);

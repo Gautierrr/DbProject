@@ -1,6 +1,7 @@
 #include "../main.h"
 
 void menu_player(Team** root, const char* championship_file) {
+    Player* rootPlayer = NULL;
     int option;
 
     do {        
@@ -22,6 +23,7 @@ void menu_player(Team** root, const char* championship_file) {
 
         switch (option) {
             case 1:
+                displayPlayerTree(rootPlayer, 0); // ne fonctionne pas, update id des joueurs
                 break;
             case 2:
                 show_player(*root);
