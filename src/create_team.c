@@ -11,7 +11,6 @@ Team* create_new_team() {
 
     team_count++;
     new_team->id = team_count; // unique id
-    new_team->playersRoot = NULL;
 
     getchar();
     printf("Enter team name: ");
@@ -49,20 +48,6 @@ Team* create_new_team() {
     new_team->height = 1;
 
     return new_team;
-}
-
-int check_id(Team* node, int id) {
-    if (node == NULL) {
-        return 0;
-    }
-
-    if (id == node->id) {
-        return 1;  // id already exist
-    } else if (id < node->id) {
-        return check_id(node->left, id);
-    } else {
-        return check_id(node->right, id);
-    }
 }
 
 int check_name(Team* node, const char* name) {
@@ -120,20 +105,13 @@ Team* insert_team(Team* node, Team* new_team) {
 void add_team(Team** root) {
     Team* new_team = create_new_team();
     if (new_team != NULL) {
-        int id = check_id(*root, new_team->id);
         int name = check_name(*root, new_team->name);
         
-        if (id == 0 && name == 0) {
+        if (name == 0) {
             *root = insert_team(*root, new_team);
             printf("Team added successfully!\n");
         } else {
-            if (id) {
-                printf("Failed to add team: ID already exist.\n");
-            }
-            
-            if (name) {
-                printf("Failed to add team: Name already exist.\n");
-            }
+            printf("Failed to add team: Name already exist.\n");
             free(new_team);
         }
     } else {

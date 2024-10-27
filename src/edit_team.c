@@ -18,7 +18,7 @@ void edit_team(Team** root) {
         return;
     }
 
-    printf("Current team details :\n");
+    printf("\nCurrent team details :\n");
     printf("ID : %d\n", team_to_modify->id);
     printf("Name : %s\n", team_to_modify->name);
     printf("Trophies : %d\n", team_to_modify->trophies);

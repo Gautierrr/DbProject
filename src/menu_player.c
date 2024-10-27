@@ -23,19 +23,19 @@ void menu_player(Team** root, const char* championship_file) {
 
         switch (option) {
             case 1:
-                displayPlayerTree(rootPlayer, 0); // ne fonctionne pas, update id des joueurs
+                displayPlayerTree(rootPlayer, 0);
                 break;
             case 2:
-                show_player(*root);
+                show_player(&rootPlayer);
                 break;
             case 3:
-                add_player(*root);
+                add_player(&rootPlayer, *root);
                 break;
             case 4:
-                edit_player(root);
+                edit_player(&rootPlayer, *root);
                 break;
             case 5:
-                delete_player(root,NULL);
+                delete_player(&rootPlayer);
                 break;
             case 6:
                 return;

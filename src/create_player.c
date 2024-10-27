@@ -2,10 +2,25 @@
 
 static int player_count = 0;
 
-Player* create_new_player(Team* team) {
+Player* create_new_player(Team* rootTeam) {
     Player* new_player = (Player*)malloc(sizeof(Player));
     if (new_player == NULL) {
         printf("Memory allocation failed.\n");
+        return NULL;
+    }
+
+    getchar();
+
+    printf("Enter the ID or name of the team the player belongs to : ");
+    fgets(new_player->team, sizeof(new_player->team), stdin);
+    size_t len = strlen(new_player->team);
+    if (len > 0 && new_player->team[len - 1] == '\n') {
+        new_player->team[len - 1] = '\0';
+    }
+
+    if (search_team(rootTeam, new_player->team) == NULL) {
+        printf("Team does not exist. Player not created.\n");
+        free(new_player);
         return NULL;
     }
 
@@ -14,7 +29,7 @@ Player* create_new_player(Team* team) {
 
     printf("Enter player name: ");
     fgets(new_player->name, sizeof(new_player->name), stdin);
-    size_t len = strlen(new_player->name);
+    len = strlen(new_player->name);
     if (len > 0 && new_player->name[len - 1] == '\n') {
         new_player->name[len - 1] = '\0';
     }
@@ -51,63 +66,71 @@ Player* create_new_player(Team* team) {
     return new_player;
 }
 
-Player* insert_player(Player* root, Player* new_player) {
-    if (root == NULL) {
+int check_player_name(Player* node, const char* name) {
+    if (node == NULL) {
+        return 0;
+    }
+
+    if (strcmp(name, node->name) == 0) {
+        return 1;
+    } 
+    
+    if (check_player_name(node->left, name) || check_player_name(node->right, name)) {
+        return 1;
+    }
+
+    return 0;
+}
+
+Player* insert_player(Player* node, Player* new_player) {
+    if (node == NULL) {
         return new_player;
     }
 
-    if (new_player->id < root->id) {
-        root->left = insert_player(root->left, new_player);
-    } else if (new_player->id > root->id) {
-        root->right = insert_player(root->right, new_player);
+    if (new_player->id < node->id) {
+        node->left = insert_player(node->left, new_player);
+    } else if (new_player->id > node->id) {
+        node->right = insert_player(node->right, new_player);
     } else {
-        return root;
+        return node;
     }
 
-    root->height = 1 + max(height_player(root->left), height_player(root->right));
+    node->height = 1 + max(height_player(node->left), height_player(node->right));
 
-    int balance = get_balance_player(root);
+    int balance = get_balance_player(node);
 
-    if (balance > 1 && new_player->id < root->left->id) {
-        return right_rotate_player(root);
-    }
-    if (balance < -1 && new_player->id > root->right->id) {
-        return left_rotate_player(root);
-    }
-    if (balance > 1 && new_player->id > root->left->id) {
-        root->left = left_rotate_player(root->left);
-        return right_rotate_player(root);
-    }
-    if (balance < -1 && new_player->id < root->right->id) {
-        root->right = right_rotate_player(root->right);
-        return left_rotate_player(root);
+    if (balance > 1 && new_player->id < node->left->id)
+        return right_rotate_player(node);
+
+    if (balance < -1 && new_player->id > node->right->id)
+        return left_rotate_player(node);
+
+    if (balance > 1 && new_player->id > node->left->id) {
+        node->left = left_rotate_player(node->left);
+        return right_rotate_player(node);
     }
 
-    return root;
+    if (balance < -1 && new_player->id < node->right->id) {
+        node->right = right_rotate_player(node->right);
+        return left_rotate_player(node);
+    }
+
+    return node;
 }
 
-void add_player_to_team(Team* team) {
-    Player* new_player = create_new_player(team);
+void add_player(Player** root, Team* rootTeam) {
+    Player* new_player = create_new_player(rootTeam);
     if (new_player != NULL) {
-        team->playersRoot = insert_player(team->playersRoot, new_player);
-        printf("Player added successfully to team %s with ID %d\n", team->name, new_player->id);
+        int name_exists = check_player_name(*root, new_player->name);
+        
+        if (name_exists == 0) {
+            *root = insert_player(*root, new_player);
+            printf("Player added successfully!\n");
+        } else {
+            printf("Failed to add player: Name already exists.\n");
+            free(new_player);
+        }
     } else {
         printf("Failed to create player.\n");
-    }
-}
-
-void add_player(Team* root) {
-    getchar();
-    char search_query[100];
-
-    printf("Enter the ID or name of the team the player belongs to: ");
-    fgets(search_query, sizeof(search_query), stdin);
-    search_query[strcspn(search_query, "\n")] = '\0';
-
-    Team* team = search_team(root, search_query);
-    if (team != NULL) {
-        add_player_to_team(team);
-    } else {
-        printf("Team not found.\n");
     }
 }

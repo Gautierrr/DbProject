@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "help") == 0) {
         printf("Usage:\n");
         printf("  main.exe \"nameChampionship\"            -> Create/load a championship\n");
-        printf("  main.exe show                           -> Show existing championships\n");
+        printf("  main.exe show                          -> Show existing championships\n");
         printf("  main.exe delete \"nameChampionship\"     -> Delete an existing championship\n");
     } else if (strcmp(argv[1], "show") == 0) {
         show_championships();

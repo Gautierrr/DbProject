@@ -14,6 +14,7 @@ typedef struct Championship {
 typedef struct Player {
     int id;
     char name[20];
+    char team[30];
     int age;
     int goals;
     int assists;
@@ -30,22 +31,10 @@ typedef struct Team {
     int win;
     int equality;
     int defeat;
-    struct Player* playersRoot;
     struct Team* left;
     struct Team* right;
     int height;
 } Team;
-
-// typedef struct Node {
-//     int type; // 1 = championship, 2 = team, 3 = player
-//     union {
-//         Championship championship;
-//         Team team;
-//         Player player;
-//     };
-//     struct Node* left;
-//     struct Node* right;
-// } Node;
 
 int max(int a, int b);
 
@@ -72,16 +61,15 @@ void show_team(Team** root);
 
 // player
 void menu_player(Team** root, const char* championship_file);
-void add_player(Team* root);
+void add_player(Player** root, Team* rootTeam);
 int height_player(Player* n);
 Player* right_rotate_player(Player* y);
 Player* left_rotate_player(Player* x);
 int get_balance_player(Player* n);
-Player* search_player(Team* root, const char* query);
-void show_player(Team* team);
-void delete_player(Team** team_root, const char* player_query);
-void edit_player(Team** root);
-Player* insert_player(Player* root, Player* new_player);
+Player* search_player(Player* root, const char* query);
+void show_player(Player** root);
+void delete_player(Player** root);
+void edit_player(Player** root, Team* rootTeam);
 void displayPlayerTree(Player* root, int space);
 
 

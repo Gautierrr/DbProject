@@ -11,7 +11,7 @@ void displayTeamTree(Team* root, int space) {
     printf("\n");
     for (int i = 10; i < space; i++)
         printf(" ");
-    printf("%d\n", root->id);
+    printf("ID: %d, Name: %s\n", root->id, root->name);
 
     displayTeamTree(root->left, space);
 }

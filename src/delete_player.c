@@ -1,9 +1,14 @@
 #include "../main.h"
 
 Player* find_min_player(Player* node) {
-    while (node && node->left != NULL) {
+    if (node == NULL) {
+        return NULL;
+    }
+    
+    while (node->left != NULL) {
         node = node->left;
     }
+    
     return node;
 }
 
@@ -31,6 +36,7 @@ Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
             Player* temp = find_min_player(root->right);
             root->id = temp->id;
             strcpy(root->name, temp->name);
+            strcpy(root->team, temp->team);
             root->age = temp->age;
             root->goals = temp->goals;
             root->assists = temp->assists;
@@ -69,24 +75,18 @@ Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
     return root;
 }
 
-void delete_player(Team** team_root, const char* player_query) {
-    if (player_query == NULL) {
-        getchar();
-        char search_query[100];
+void delete_player(Player** root) {
+    getchar();
+    char search_query[100];
 
-        printf("Enter the ID or name of the player to delete: ");
-        fgets(search_query, sizeof(search_query), stdin);
-        search_query[strcspn(search_query, "\n")] = '\0';
+    printf("Enter the ID or name of the player to delete: ");
+    fgets(search_query, sizeof(search_query), stdin);
+    search_query[strcspn(search_query, "\n")] = '\0';
 
-        player_query = search_query;
-    }
-
-    Player* node_to_delete;
-
-    node_to_delete = search_player((*team_root)->playersRoot, player_query);    
+    Player* node_to_delete = search_player(*root, search_query);
     
     if (node_to_delete != NULL) {
-        (*team_root)->playersRoot = delete_player_and_balancing((*team_root)->playersRoot, node_to_delete);
+        *root = delete_player_and_balancing(*root, node_to_delete);
         printf("Player deleted successfully!\n");
     } else {
         printf("Player not found.\n");
