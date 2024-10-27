@@ -82,5 +82,5 @@ void save_teams_and_players(Team* root, Player* all_players, const char* champio
     fprintf(file, "\n  ]\n}\n");
 
     fclose(file);
-    printf("Teams and players saved to %s successfully.\n", filepath);
+    printf("\nTeams and players saved to %s successfully.\n", filepath);
 }

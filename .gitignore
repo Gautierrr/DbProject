@@ -5,3 +5,6 @@ notes.txt
 CC1.pdf
 
 db/
+
+cJSON.h
+cJSON.c

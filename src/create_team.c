@@ -1,6 +1,6 @@
 #include "../main.h"
 
-static int team_count = 0;
+int team_count = 0;
 
 Team* create_new_team() {
     Team* new_team = (Team*)malloc(sizeof(Team));
