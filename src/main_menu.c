@@ -1,6 +1,25 @@
 #include "../main.h"
+#include <stdlib.h>
 
-void main_menu(Team** root, const char* championship_file) {
+void free_player_tree(Player* player) {
+    if (player == NULL) return;
+
+    free_player_tree(player->left);
+    free_player_tree(player->right);
+
+    free(player);
+}
+
+void free_team_tree(Team* team) {
+    if (team == NULL) return;
+
+    free_team_tree(team->left);
+    free_team_tree(team->right);
+
+    free(team);
+}
+
+void main_menu(Team** root, Player* rootPlayer, const char* championship_file) {
     int option;
 
     do {        
@@ -39,15 +58,17 @@ void main_menu(Team** root, const char* championship_file) {
                 delete_team(root);
                 break;
             case 6:
-                menu_player(root, championship_file);
+                menu_player(root, rootPlayer, championship_file);
                 break;
             case 7:
-                // save_teams_and_players(*root, championship_file);
-                option = 8;
-                break;
+                save_teams_and_players(*root, rootPlayer, championship_file);
             case 8:
                 printf("Bye bye ...\n");
-                break;
+                free_team_tree(*root);
+                free_player_tree(rootPlayer);
+                *root = NULL;
+                rootPlayer = NULL;
+                exit(0);
             default:
                 printf("Invalid option, please try again.\n");
         }

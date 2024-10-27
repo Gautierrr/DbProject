@@ -1,7 +1,6 @@
 #include "../main.h"
 
-void menu_player(Team** root, const char* championship_file) {
-    Player* rootPlayer = NULL;
+void menu_player(Team** root, Player* rootPlayer, const char* championship_file) {
     int option;
 
     do {        
@@ -38,7 +37,8 @@ void menu_player(Team** root, const char* championship_file) {
                 delete_player(&rootPlayer);
                 break;
             case 6:
-                return;
+                main_menu(root , rootPlayer, championship_file);
+                break;
             default:
                 printf("Invalid option, please try again.\n");
         }

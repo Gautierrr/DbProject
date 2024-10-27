@@ -60,9 +60,10 @@ void create_championship(const char *championshipName) {
         }*/
     } else {
         Team* root = NULL;
+        Player* rootPlayer = NULL;
 
         printf("Creating new championship '%s'.\n", championshipName);
         create_json_file(championshipName);
-        main_menu(&root, championshipName);
+        main_menu(&root , rootPlayer, championshipName);
     }
 }

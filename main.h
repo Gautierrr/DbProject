@@ -42,7 +42,7 @@ int max(int a, int b);
 void create_championship(const char *championshipName);
 void show_championships();
 void delete_championship(const char *championshipName);
-void main_menu(Team** root, const char* championship_file);
+void main_menu(Team** root, Player* rootPlayer, const char* championship_file);
 int file_exist(const char *filepath);
 
 // team
@@ -60,7 +60,7 @@ void edit_team(Team** root);
 void show_team(Team** root);
 
 // player
-void menu_player(Team** root, const char* championship_file);
+void menu_player(Team** root, Player* rootPlayer, const char* championship_file);
 void add_player(Player** root, Team* rootTeam);
 int height_player(Player* n);
 Player* right_rotate_player(Player* y);
@@ -76,6 +76,6 @@ void displayPlayerTree(Player* root, int space);
 
 
 // save
-void save_teams_and_players(Team* root, const char* championship_file);
+void save_teams_and_players(Team* root, Player* all_players, const char* championship_file);
 
 #endif

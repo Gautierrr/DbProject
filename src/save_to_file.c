@@ -13,27 +13,23 @@ void save_player_to_file(Player* player, FILE* file) {
     }
 }
 
-int count_players(Player* player) {
-    if (player == NULL) return 0;
-    return 1 + count_players(player->left) + count_players(player->right);
-}
-
-void save_players_to_file(Player* player, FILE* file, int* players_saved, int total_players) {
+void save_players_for_team(Player* player, const char* team_name, FILE* file, int* is_first_player) {
     if (player == NULL) return;
 
-    save_players_to_file(player->left, file, players_saved, total_players);
+    save_players_for_team(player->left, team_name, file, is_first_player);
 
-    save_player_to_file(player, file);
-    (*players_saved)++;
-
-    if (*players_saved < total_players) {
-        fprintf(file, ",\n");
+    if (strcmp(player->team, team_name) == 0) {
+        if (!*is_first_player) {
+            fprintf(file, ",\n");
+        }
+        save_player_to_file(player, file);
+        *is_first_player = 0;
     }
 
-    save_players_to_file(player->right, file, players_saved, total_players);
+    save_players_for_team(player->right, team_name, file, is_first_player);
 }
 
-void save_team_to_file(Team* team, FILE* file) {
+void save_team_to_file(Team* team, Player* all_players, FILE* file) {
     if (team != NULL) {
         fprintf(file, "    {\n");
         fprintf(file, "        \"id\": %d,\n", team->id);
@@ -43,25 +39,19 @@ void save_team_to_file(Team* team, FILE* file) {
         fprintf(file, "        \"equality\": %d,\n", team->equality);
         fprintf(file, "        \"defeat\": %d,\n", team->defeat);
 
-        if (team->playersRoot != NULL) {
-            int total_players = count_players(team->playersRoot);
-            int players_saved = 0;
-
-            fprintf(file, "        \"players\": [\n");
-            save_players_to_file(team->playersRoot, file, &players_saved, total_players);
-            fprintf(file, "\n        ]\n");
-        } else {
-            fprintf(file, "        \"players\": []\n");
-        }
+        fprintf(file, "        \"players\": [\n");
+        int is_first_player = 1;
+        save_players_for_team(all_players, team->name, file, &is_first_player);
+        fprintf(file, "\n        ]\n");
 
         fprintf(file, "    }");
     }
 }
 
-void save_teams_to_file(Team* root, FILE* file, int* first_team) {
+void save_teams_to_file(Team* root, Player* all_players, FILE* file, int* first_team) {
     if (root == NULL) return;
 
-    save_teams_to_file(root->left, file, first_team);
+    save_teams_to_file(root->left, all_players, file, first_team);
 
     if (!*first_team) {
         fprintf(file, ",\n");
@@ -69,12 +59,12 @@ void save_teams_to_file(Team* root, FILE* file, int* first_team) {
         *first_team = 0;
     }
 
-    save_team_to_file(root, file);
+    save_team_to_file(root, all_players, file);
 
-    save_teams_to_file(root->right, file, first_team);
+    save_teams_to_file(root->right, all_players, file, first_team);
 }
 
-void save_teams_and_players(Team* root, const char* championship_file) {
+void save_teams_and_players(Team* root, Player* all_players, const char* championship_file) {
     char filepath[50];
     snprintf(filepath, sizeof(filepath), "db/%s.json", championship_file);
 
@@ -87,7 +77,7 @@ void save_teams_and_players(Team* root, const char* championship_file) {
     fprintf(file, "{\n  \"teams\": [\n");
 
     int first_team = 1;
-    save_teams_to_file(root, file, &first_team);
+    save_teams_to_file(root, all_players, file, &first_team);
 
     fprintf(file, "\n  ]\n}\n");
 
