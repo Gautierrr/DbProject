@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         delete_championship(argv[2]);
     } else {
         char filepath[50];
-        snprintf(filepath, sizeof(filepath), "db/%s.json", argv[1]);
+        snprintf(filepath, sizeof(filepath), "db/%s.json.enc", argv[1]);
 
         FILE *file = fopen(filepath, "r");
         if (file) {

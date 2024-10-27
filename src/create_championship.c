@@ -1,21 +1,5 @@
 #include "../main.h"
 
-/*
-int verify_password() {
-    char password[20];
-    printf("Enter password: ");
-    scanf("%19s", password);
-
-    if (strcmp(password, "password") == 0) {
-        printf("Password correct. Loading championship...\n");
-        return 1;
-    } else {
-        printf("Incorrect password.\n");
-        return 0;
-    }
-}
-*/
-
 int file_exist(const char *filepath) {
     FILE *file = fopen(filepath, "r");
     if (file != NULL) {
@@ -50,20 +34,9 @@ void create_championship(const char *championshipName) {
     char filepath[50];
     snprintf(filepath, sizeof(filepath), "db/%s.json", championshipName);
 
-    if (file_exist(filepath)) {
-        printf("Championship '%s' already exists.\n", championshipName);
-        /*if (verify_password()) {
-            // Charger les données du championnat
-            printf("Championship '%s' loaded successfully.\n", championshipName);
-        } else {
-            printf("Failed to load championship '%s'.\n", championshipName);
-        }*/
-    } else {
-        Team* root = NULL;
-        Player* rootPlayer = NULL;
+    Team* root = NULL;
+    Player* rootPlayer = NULL;
 
-        printf("Creating new championship '%s'.\n", championshipName);
-        create_json_file(championshipName);
-        main_menu(&root , rootPlayer, championshipName);
-    }
+    create_json_file(championshipName);
+    main_menu(&root , rootPlayer, championshipName);
 }

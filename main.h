@@ -6,6 +6,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <dirent.h>
+#include "cJSON.h"
+#include <openssl/evp.h>
+#include <openssl/rand.h>
 
 typedef struct Championship {
     char name[20];

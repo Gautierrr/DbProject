@@ -1,5 +1,40 @@
 #include "../main.h"
-#include "../cJSON.h"
+
+void decrypt_file(const char *input_filepath, const char *output_filepath, const char *password) {
+    unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
+
+    EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
+    
+    FILE *infile = fopen(input_filepath, "rb");
+    FILE *outfile = fopen(output_filepath, "wb");
+    
+    if (!infile || !outfile) {
+        perror("File open error");
+        return;
+    }
+
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv);
+    
+    unsigned char buffer[1024];
+    unsigned char plaintext[1024 + EVP_MAX_BLOCK_LENGTH];
+    int len;
+
+    while (1) {
+        size_t bytes_read = fread(buffer, 1, sizeof(buffer), infile);
+        if (bytes_read <= 0) break;
+
+        EVP_DecryptUpdate(ctx, plaintext, &len, buffer, bytes_read);
+        fwrite(plaintext, 1, len, outfile);
+    }
+
+    EVP_DecryptFinal_ex(ctx, plaintext, &len);
+    fwrite(plaintext, 1, len, outfile);
+    
+    EVP_CIPHER_CTX_free(ctx);
+    fclose(infile);
+    fclose(outfile);
+}
 
 Team* create_team_node(int id, const char* name, int trophies, int win, int equality, int defeat) {
     Team* team = (Team*)malloc(sizeof(Team));
@@ -28,14 +63,21 @@ Player* create_player_node(int id, const char* name, int age, int goals, int ass
     return player;
 }
 
-
 void load_file(Team** root_team, Player** root_player, const char* filename) {
     char filepath[50];
-    snprintf(filepath, sizeof(filepath), "db/%s.json", filename);
+    snprintf(filepath, sizeof(filepath), "db/%s.json.enc", filename);
+    char decrypted_filepath[50];
+    snprintf(decrypted_filepath, sizeof(decrypted_filepath), "db/%s_decrypted.json", filename);
 
-    FILE* file = fopen(filepath, "r");
+    char password[100];
+    printf("Enter password to decrypt the file: ");
+    scanf("%s", password);
+
+    decrypt_file(filepath, decrypted_filepath, password);
+
+    FILE* file = fopen(decrypted_filepath, "r");
     if (file == NULL) {
-        printf("Error opening file: %s\n", filepath);
+        printf("Error opening file: %s\n", decrypted_filepath);
         return;
     }
 
@@ -68,7 +110,7 @@ void load_file(Team** root_team, Player** root_player, const char* filename) {
     int max_player_id = 0;
     cJSON* team_json;
     cJSON* player_json;
-    
+
     cJSON_ArrayForEach(team_json, teams_json) {
         int id = cJSON_GetObjectItem(team_json, "id")->valueint;
         if (id > max_team_id) {
@@ -106,10 +148,12 @@ void load_file(Team** root_team, Player** root_player, const char* filename) {
 
     cJSON_Delete(root_json);
     free(json_data);
-    printf("Teams and players have been successfully loaded from %s.\n", filepath);
+    printf("Teams and players have been successfully loaded from %s.\n", decrypted_filepath);
 
     team_count = max_team_id;
     player_count = max_player_id;
+
+    remove(decrypted_filepath);
 
     main_menu(root_team, *root_player, filename);
 }
