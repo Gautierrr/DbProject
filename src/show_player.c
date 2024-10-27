@@ -19,7 +19,7 @@ void show_player(Team* team) {
     }
 
     printf("Current player details :\n");
-    printf("ID : %s\n", displayPlayer->id);
+    printf("ID : %d\n", displayPlayer->id);
     printf("Name : %s\n", displayPlayer->name);
     printf("Age : %d\n", displayPlayer->age);
     printf("Goals : %d\n", displayPlayer->goals);

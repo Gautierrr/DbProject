@@ -12,7 +12,7 @@ typedef struct Championship {
 } Championship;
 
 typedef struct Player {
-    char id[10];
+    int id;
     char name[20];
     int age;
     int goals;
@@ -30,7 +30,6 @@ typedef struct Team {
     int win;
     int equality;
     int defeat;
-    int playerCount;
     struct Player* playersRoot;
     struct Team* left;
     struct Team* right;
@@ -78,7 +77,7 @@ int height_player(Player* n);
 Player* right_rotate_player(Player* y);
 Player* left_rotate_player(Player* x);
 int get_balance_player(Player* n);
-Player* search_player(Player* root, const char* query);
+Player* search_player(Team* root, const char* query);
 void show_player(Team* team);
 void delete_player(Team** team_root, const char* player_query);
 void edit_player(Team** root);

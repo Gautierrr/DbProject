@@ -3,7 +3,7 @@
 void save_player_to_file(Player* player, FILE* file) {
     if (player != NULL) {
         fprintf(file, "            {\n");
-        fprintf(file, "                \"id\": \"%s\",\n", player->id);
+        fprintf(file, "                \"id\": \"%d\",\n", player->id);
         fprintf(file, "                \"name\": \"%s\",\n", player->name);
         fprintf(file, "                \"age\": %d,\n", player->age);
         fprintf(file, "                \"goals\": %d,\n", player->goals);

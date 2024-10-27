@@ -30,7 +30,7 @@ void edit_player(Team** root) {
     }
 
     printf("Current player details :\n");
-    printf("ID : %s\n", player_to_modify->id);
+    printf("ID : %d\n", player_to_modify->id);
     printf("Name : %s\n", player_to_modify->name);
     printf("Age : %d\n", player_to_modify->age);
     printf("Goals : %d\n", player_to_modify->goals);
@@ -96,7 +96,10 @@ void edit_player(Team** root) {
 
         Team* new_team = search_team(*root, new_team_query);
         if (new_team != NULL) {
-            delete_player(&team_with_player, player_to_modify->id);
+            char id_str[20];
+            snprintf(id_str, sizeof(id_str), "%d", player_to_modify->id);
+
+            delete_player(&team_with_player, id_str);
             new_team->playersRoot = insert_player(new_team->playersRoot, player_to_modify);
             printf("Player moved to team %s successfully!\n", new_team->name);
         } else {

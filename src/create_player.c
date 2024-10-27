@@ -1,5 +1,7 @@
 #include "../main.h"
 
+static int player_count = 0;
+
 Player* create_new_player(Team* team) {
     Player* new_player = (Player*)malloc(sizeof(Player));
     if (new_player == NULL) {
@@ -7,9 +9,8 @@ Player* create_new_player(Team* team) {
         return NULL;
     }
 
-    // id player = "idTeam.idPlayer"
-    team->playerCount++;
-    sprintf(new_player->id, "%d.%d", team->id, team->playerCount);
+    player_count++;
+    new_player->id = player_count;
 
     printf("Enter player name: ");
     fgets(new_player->name, sizeof(new_player->name), stdin);
@@ -55,9 +56,9 @@ Player* insert_player(Player* root, Player* new_player) {
         return new_player;
     }
 
-    if (strcmp(new_player->id, root->id) < 0) {
+    if (new_player->id < root->id) {
         root->left = insert_player(root->left, new_player);
-    } else if (strcmp(new_player->id, root->id) > 0) {
+    } else if (new_player->id > root->id) {
         root->right = insert_player(root->right, new_player);
     } else {
         return root;
@@ -67,20 +68,17 @@ Player* insert_player(Player* root, Player* new_player) {
 
     int balance = get_balance_player(root);
 
-    if (balance > 1 && strcmp(new_player->id, root->left->id) < 0) {
+    if (balance > 1 && new_player->id < root->left->id) {
         return right_rotate_player(root);
     }
-
-    if (balance < -1 && strcmp(new_player->id, root->right->id) > 0) {
+    if (balance < -1 && new_player->id > root->right->id) {
         return left_rotate_player(root);
     }
-
-    if (balance > 1 && strcmp(new_player->id, root->left->id) > 0) {
+    if (balance > 1 && new_player->id > root->left->id) {
         root->left = left_rotate_player(root->left);
         return right_rotate_player(root);
     }
-
-    if (balance < -1 && strcmp(new_player->id, root->right->id) < 0) {
+    if (balance < -1 && new_player->id < root->right->id) {
         root->right = right_rotate_player(root->right);
         return left_rotate_player(root);
     }
@@ -92,7 +90,7 @@ void add_player_to_team(Team* team) {
     Player* new_player = create_new_player(team);
     if (new_player != NULL) {
         team->playersRoot = insert_player(team->playersRoot, new_player);
-        printf("Player added successfully to team %s with ID %s.\n", team->name, new_player->id);
+        printf("Player added successfully to team %s with ID %d\n", team->name, new_player->id);
     } else {
         printf("Failed to create player.\n");
     }
@@ -102,7 +100,7 @@ void add_player(Team* root) {
     getchar();
     char search_query[100];
 
-    printf("Enter the ID or name of the team the player belongs to : ");
+    printf("Enter the ID or name of the team the player belongs to: ");
     fgets(search_query, sizeof(search_query), stdin);
     search_query[strcspn(search_query, "\n")] = '\0';
 

@@ -12,9 +12,9 @@ Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
         return root;
     }
 
-    if (strcmp(node_to_delete->id, root->id) < 0) {
+    if (node_to_delete->id < root->id) {
         root->left = delete_player_and_balancing(root->left, node_to_delete);
-    } else if (strcmp(node_to_delete->id, root->id) > 0) {
+    } else if (node_to_delete->id > root->id) {
         root->right = delete_player_and_balancing(root->right, node_to_delete);
     } else {
         if (root->left == NULL || root->right == NULL) {
@@ -29,7 +29,7 @@ Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
             free(temp);
         } else {
             Player* temp = find_min_player(root->right);
-            strcpy(root->id, temp->id);
+            root->id = temp->id;
             strcpy(root->name, temp->name);
             root->age = temp->age;
             root->goals = temp->goals;
@@ -38,6 +38,10 @@ Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
 
             root->right = delete_player_and_balancing(root->right, temp);
         }
+    }
+
+    if (root == NULL) {
+        return root;
     }
 
     root->height = 1 + max(height_player(root->left), height_player(root->right));
@@ -77,7 +81,9 @@ void delete_player(Team** team_root, const char* player_query) {
         player_query = search_query;
     }
 
-    Player* node_to_delete = search_player((*team_root)->playersRoot, player_query);
+    Player* node_to_delete;
+
+    node_to_delete = search_player((*team_root)->playersRoot, player_query);    
     
     if (node_to_delete != NULL) {
         (*team_root)->playersRoot = delete_player_and_balancing((*team_root)->playersRoot, node_to_delete);

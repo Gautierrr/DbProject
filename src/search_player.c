@@ -1,40 +1,44 @@
 #include "../main.h"
 
-Player* search_player_by_id(Player* node, const char* id) {
-    if (node == NULL || strcmp(node->id, id) == 0) {
-        return node;
-    }
-
-    if (strcmp(id, node->id) < 0) {
-        return search_player_by_id(node->left, id);
-    } else {
-        return search_player_by_id(node->right, id);
-    }
-}
-
-Player* search_player_by_name(Player* node, const char* name) {
-    if (node == NULL) {
+Player* search_player_by_id(Team* root, int id) {
+    if (root == NULL) {
         return NULL;
     }
-
-    if (strcmp(node->name, name) == 0) {
-        return node;
-    }
-
-    Player* result = search_player_by_name(node->left, name);
-    if (result != NULL) {
-        return result;
-    }
-
-    return search_player_by_name(node->right, name);
-}
-
-Player* search_player(Player* root, const char* query) {
-    Player* player = search_player_by_id(root, query);
+    
+    Player* player = search_player_by_id(root->playersRoot, id);
     if (player != NULL) {
         return player;
     }
 
-    return search_player_by_name(root, query);
+    player = search_player_by_id(root->left, id);
+    if (player != NULL) {
+        return player;
+    }
+    return search_player_by_id(root->right, id);
 }
 
+Player* search_player_by_name(Team* root, const char* name) {
+    if (root == NULL) {
+        return NULL;
+    }
+    
+    Player* player = search_player_by_name(root->playersRoot, name);
+    if (player != NULL) {
+        return player;
+    }
+
+    player = search_player_by_name(root->left, name);
+    if (player != NULL) {
+        return player;
+    }
+    return search_player_by_name(root->right, name);
+}
+
+Player* search_player(Team* root, const char* query) {
+    int id;
+    if (sscanf(query, "%d", &id) == 1) {
+        return search_player_by_id(root, id);
+    } else {
+        return search_player_by_name(root, query);
+    }
+}

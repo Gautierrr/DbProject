@@ -11,7 +11,7 @@ void displayPlayerTree(Player* root, int space) {
     printf("\n");
     for (int i = 10; i < space; i++)
         printf(" ");
-    printf("ID: %s, Name: %s\n", root->id, root->name);
+    printf("ID: %d, Name: %s\n", root->id, root->name);
 
     displayPlayerTree(root->left, space);
 }

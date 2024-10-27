@@ -11,7 +11,6 @@ Team* create_new_team() {
 
     team_count++;
     new_team->id = team_count; // unique id
-    new_team->playerCount = 0;
     new_team->playersRoot = NULL;
 
     getchar();
