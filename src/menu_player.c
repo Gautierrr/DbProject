@@ -1,17 +1,17 @@
 #include "../main.h"
 
-void menu_player(Team** root, Player* rootPlayer, const char* championship_file) {
+void menu_player(Team** root, Player* rootPlayer, const char* championshipName) {
     int option;
 
     do {        
-        printf("\n\n\n====== Main menu ======\n");
-        printf("1. See the existing players\n");
-        printf("2. Show a player\n");
-        printf("3. Add a player\n");
-        printf("4. Edit a player\n");
-        printf("5. Delete a player\n");
-        printf("6. Return to teams interface to save\n");
-        printf("========================\n\n\n");
+        printf("\n\n\n========== Players interface ==========\n");
+        printf(" 1. See the existing players\n");
+        printf(" 2. Show a player\n");
+        printf(" 3. Add a player\n");
+        printf(" 4. Edit a player\n");
+        printf(" 5. Delete a player\n");
+        printf(" 6. Return to teams interface to save\n");
+        printf("=======================================\n\n\n");
 
         printf("Please choose an option : ");
         
@@ -22,7 +22,7 @@ void menu_player(Team** root, Player* rootPlayer, const char* championship_file)
 
         switch (option) {
             case 1:
-                displayPlayerTree(rootPlayer, 0);
+                display_player_tree(rootPlayer, 0);
                 break;
             case 2:
                 show_player(&rootPlayer);
@@ -37,7 +37,7 @@ void menu_player(Team** root, Player* rootPlayer, const char* championship_file)
                 delete_player(&rootPlayer);
                 break;
             case 6:
-                main_menu(root , rootPlayer, championship_file);
+                main_menu(root , rootPlayer, championshipName);
                 break;
             default:
                 printf("Invalid option, please try again.\n");

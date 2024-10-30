@@ -5,12 +5,6 @@ int max(int a, int b) {
     return (a > b) ? a : b;
 }
 
-
-
-
-
-
-
 int height_team(Team* n) {
     if (n == NULL)
         return 0;

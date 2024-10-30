@@ -30,10 +30,10 @@ Player* search_player_by_name(Player* node, const char* name) {
 }
 
 Player* search_player(Player* root, const char* query) {
-    char* endptr;
-    int id = strtol(query, &endptr, 10);
+    char* nb;
+    int id = strtol(query, &nb, 10);
 
-    if (*endptr == '\0') {
+    if (*nb == '\0') {
         return search_player_by_id(root, id);
     } else {
         return search_player_by_name(root, query);

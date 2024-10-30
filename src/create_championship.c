@@ -9,12 +9,12 @@ int file_exist(const char *filepath) {
     return 0;
 }
 
-void create_json_file(const char *name) {
+void create_json_file(const char *championshipName) {
     const char *directory = "db";
     char filepath[30];
 
     // db/name.json
-    snprintf(filepath, sizeof(filepath), "%s/%s.json", directory, name);
+    snprintf(filepath, sizeof(filepath), "%s/%s.json", directory, championshipName);
 
     FILE *file = fopen(filepath, "w");
     if (file == NULL) {
@@ -22,11 +22,9 @@ void create_json_file(const char *name) {
         return;
     }
 
-    fprintf(file, "{\n\t\"championship\": \"%s\"\n}\n", name);
+    fprintf(file, "{\n\t\"championship\": \"%s\"\n}\n", championshipName);
 
     fclose(file);
-
-    printf("File '%s' created successfully.\n", filepath);
 }
 
 

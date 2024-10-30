@@ -1,5 +1,6 @@
 #include "../main.h"
 
+// voir pour la fonction max
 int height_player(Player* n) {
     if (n == NULL)
         return 0;

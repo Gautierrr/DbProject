@@ -1,53 +1,53 @@
 #include "../main.h"
 
-int team_count = 0;
+int teamCount = 0;
 
 Team* create_new_team() {
-    Team* new_team = (Team*)malloc(sizeof(Team));
-    if (new_team == NULL) {
+    Team* newTeam = (Team*)malloc(sizeof(Team));
+    if (newTeam == NULL) {
         printf("Memory allocation failed.\n");
         return NULL;
     }
 
-    team_count++;
-    new_team->id = team_count; // unique id
+    teamCount++;
+    newTeam->id = teamCount; // unique id
 
     getchar();
     printf("Enter team name: ");
-    fgets(new_team->name, sizeof(new_team->name), stdin);
-    size_t len = strlen(new_team->name);
-    if (len > 0 && new_team->name[len - 1] == '\n') {
-        new_team->name[len - 1] = '\0';
+    fgets(newTeam->name, sizeof(newTeam->name), stdin);
+    size_t len = strlen(newTeam->name);
+    if (len > 0 && newTeam->name[len - 1] == '\n') {
+        newTeam->name[len - 1] = '\0';
     }
 
     printf("Enter number of trophies: ");
-    while (scanf("%d", &new_team->trophies) != 1) {
+    while (scanf("%d", &newTeam->trophies) != 1) {
         printf("Invalid input. Please enter a valid number of trophies : ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of wins: ");
-    while (scanf("%d", &new_team->win) != 1) {
+    while (scanf("%d", &newTeam->win) != 1) {
         printf("Invalid input. Please enter a valid number of wins : ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of equalities: ");
-    while (scanf("%d", &new_team->equality) != 1) {
+    while (scanf("%d", &newTeam->equality) != 1) {
         printf("Invalid input. Please enter a valid number of equalities : ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of defeats: ");
-    while (scanf("%d", &new_team->defeat) != 1) {
+    while (scanf("%d", &newTeam->defeat) != 1) {
         printf("Invalid input. Please enter a valid number of defeats : ");
         while (getchar() != '\n');
     }
 
-    new_team->left = new_team->right = NULL;
-    new_team->height = 1;
+    newTeam->left = newTeam->right = NULL;
+    newTeam->height = 1;
 
-    return new_team;
+    return newTeam;
 }
 
 int check_name(Team* node, const char* name) {
@@ -66,15 +66,15 @@ int check_name(Team* node, const char* name) {
     return 0;
 }
 
-Team* insert_team(Team* node, Team* new_team) {
+Team* insert_team(Team* node, Team* newTeam) {
     if (node == NULL) {
-        return new_team;
+        return newTeam;
     }
 
-    if (new_team->id < node->id) {
-        node->left = insert_team(node->left, new_team);
-    } else if (new_team->id > node->id) {
-        node->right = insert_team(node->right, new_team);
+    if (newTeam->id < node->id) {
+        node->left = insert_team(node->left, newTeam);
+    } else if (newTeam->id > node->id) {
+        node->right = insert_team(node->right, newTeam);
     } else {
         return node;
     }
@@ -83,18 +83,18 @@ Team* insert_team(Team* node, Team* new_team) {
 
     int balance = get_balance_team(node);
 
-    if (balance > 1 && new_team->id < node->left->id)
+    if (balance > 1 && newTeam->id < node->left->id)
         return right_rotate_team(node);
 
-    if (balance < -1 && new_team->id > node->right->id)
+    if (balance < -1 && newTeam->id > node->right->id)
         return left_rotate_team(node);
 
-    if (balance > 1 && new_team->id > node->left->id) {
+    if (balance > 1 && newTeam->id > node->left->id) {
         node->left = left_rotate_team(node->left);
         return right_rotate_team(node);
     }
 
-    if (balance < -1 && new_team->id < node->right->id) {
+    if (balance < -1 && newTeam->id < node->right->id) {
         node->right = right_rotate_team(node->right);
         return left_rotate_team(node);
     }
@@ -103,16 +103,16 @@ Team* insert_team(Team* node, Team* new_team) {
 }
 
 void add_team(Team** root) {
-    Team* new_team = create_new_team();
-    if (new_team != NULL) {
-        int name = check_name(*root, new_team->name);
+    Team* newTeam = create_new_team();
+    if (newTeam != NULL) {
+        int name = check_name(*root, newTeam->name);
         
         if (name == 0) {
-            *root = insert_team(*root, new_team);
+            *root = insert_team(*root, newTeam);
             printf("Team added successfully!\n");
         } else {
             printf("Failed to add team: Name already exist.\n");
-            free(new_team);
+            free(newTeam);
         }
     } else {
         printf("Failed to create team.\n");

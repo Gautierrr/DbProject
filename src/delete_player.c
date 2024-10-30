@@ -12,15 +12,15 @@ Player* find_min_player(Player* node) {
     return node;
 }
 
-Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
+Player* delete_player_and_balancing(Player* root, Player* nodeToDelete) {
     if (root == NULL) {
         return root;
     }
 
-    if (node_to_delete->id < root->id) {
-        root->left = delete_player_and_balancing(root->left, node_to_delete);
-    } else if (node_to_delete->id > root->id) {
-        root->right = delete_player_and_balancing(root->right, node_to_delete);
+    if (nodeToDelete->id < root->id) {
+        root->left = delete_player_and_balancing(root->left, nodeToDelete);
+    } else if (nodeToDelete->id > root->id) {
+        root->right = delete_player_and_balancing(root->right, nodeToDelete);
     } else {
         if (root->left == NULL || root->right == NULL) {
             Player* temp = root->left ? root->left : root->right;
@@ -77,16 +77,16 @@ Player* delete_player_and_balancing(Player* root, Player* node_to_delete) {
 
 void delete_player(Player** root) {
     getchar();
-    char search_query[100];
+    char query[50];
 
     printf("Enter the ID or name of the player to delete: ");
-    fgets(search_query, sizeof(search_query), stdin);
-    search_query[strcspn(search_query, "\n")] = '\0';
+    fgets(query, sizeof(query), stdin);
+    query[strcspn(query, "\n")] = '\0';
 
-    Player* node_to_delete = search_player(*root, search_query);
+    Player* nodeToDelete = search_player(*root, query);
     
-    if (node_to_delete != NULL) {
-        *root = delete_player_and_balancing(*root, node_to_delete);
+    if (nodeToDelete != NULL) {
+        *root = delete_player_and_balancing(*root, nodeToDelete);
         printf("Player deleted successfully!\n");
     } else {
         printf("Player not found.\n");

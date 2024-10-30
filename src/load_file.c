@@ -1,5 +1,6 @@
 #include "../main.h"
 
+// Revoir toute cette partie
 void decrypt_file(const char *input_filepath, const char *output_filepath, const char *password) {
     unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
 
@@ -63,93 +64,92 @@ Player* create_player_node(int id, const char* name, int age, int goals, int ass
     return player;
 }
 
-void load_file(Team** root_team, Player** root_player, const char* filename, const char* password) {
+void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipName, const char* password) {
     char filepath[50];
-    snprintf(filepath, sizeof(filepath), "db/%s.json.enc", filename);
-    char decrypted_filepath[50];
-    snprintf(decrypted_filepath, sizeof(decrypted_filepath), "db/%s_decrypted.json", filename);
+    snprintf(filepath, sizeof(filepath), "db/%s.json.enc", championshipName);
+    char decryptedFilepath[50];
+    snprintf(decryptedFilepath, sizeof(decryptedFilepath), "db/%s_decrypted.json", championshipName);
 
-    decrypt_file(filepath, decrypted_filepath, password);
+    decrypt_file(filepath, decryptedFilepath, password);
 
-    FILE* file = fopen(decrypted_filepath, "r");
+    FILE* file = fopen(decryptedFilepath, "r");
     if (file == NULL) {
-        printf("Error opening file: %s\n", decrypted_filepath);
+        printf("Error opening file: %s\n", decryptedFilepath);
         return;
     }
 
     fseek(file, 0, SEEK_END);
-    long file_size = ftell(file);
+    long fileSize = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    char* json_data = (char*)malloc(file_size + 1);
-    fread(json_data, 1, file_size, file);
+    char* jsonData = (char*)malloc(fileSize + 1);
+    fread(jsonData, 1, fileSize, file);
     fclose(file);
 
-    json_data[file_size] = '\0';
+    jsonData[fileSize] = '\0';
 
-    cJSON* root_json = cJSON_Parse(json_data);
-    if (root_json == NULL) {
+    cJSON* rootJson = cJSON_Parse(jsonData);
+    if (rootJson == NULL) {
         printf("Error parsing JSON\n");
-        free(json_data);
+        free(jsonData);
         return;
     }
 
-    cJSON* teams_json = cJSON_GetObjectItem(root_json, "teams");
-    if (!cJSON_IsArray(teams_json)) {
+    cJSON* teamsJson = cJSON_GetObjectItem(rootJson, "teams");
+    if (!cJSON_IsArray(teamsJson)) {
         printf("Error: 'teams' is not a valid JSON array\n");
-        cJSON_Delete(root_json);
-        free(json_data);
+        cJSON_Delete(rootJson);
+        free(jsonData);
         return;
     }
 
-    int max_team_id = 0;
-    int max_player_id = 0;
-    cJSON* team_json;
-    cJSON* player_json;
+    int maxTeamId = 0;
+    int maxPlayerId = 0;
+    cJSON* teamJson;
 
-    cJSON_ArrayForEach(team_json, teams_json) {
-        int id = cJSON_GetObjectItem(team_json, "id")->valueint;
-        if (id > max_team_id) {
-            max_team_id = id;
+    cJSON_ArrayForEach(teamJson, teamsJson) {
+        int id = cJSON_GetObjectItem(teamJson, "id")->valueint;
+        if (id > maxTeamId) {
+            maxTeamId = id;
         }
-        const char* name = cJSON_GetObjectItem(team_json, "name")->valuestring;
-        int trophies = cJSON_GetObjectItem(team_json, "trophies")->valueint;
-        int win = cJSON_GetObjectItem(team_json, "win")->valueint;
-        int equality = cJSON_GetObjectItem(team_json, "equality")->valueint;
-        int defeat = cJSON_GetObjectItem(team_json, "defeat")->valueint;
+        const char* name = cJSON_GetObjectItem(teamJson, "name")->valuestring;
+        int trophies = cJSON_GetObjectItem(teamJson, "trophies")->valueint;
+        int win = cJSON_GetObjectItem(teamJson, "win")->valueint;
+        int equality = cJSON_GetObjectItem(teamJson, "equality")->valueint;
+        int defeat = cJSON_GetObjectItem(teamJson, "defeat")->valueint;
 
         Team* team = create_team_node(id, name, trophies, win, equality, defeat);
-        *root_team = insert_team(*root_team, team);
+        *rootTeam = insert_team(*rootTeam, team);
 
-        cJSON* players_json = cJSON_GetObjectItem(team_json, "players");
-        if (cJSON_IsArray(players_json)) {
-            cJSON* player_json;
-            cJSON_ArrayForEach(player_json, players_json) {
-                int player_id = atoi(cJSON_GetObjectItem(player_json, "id")->valuestring);
-                const char* player_name = cJSON_GetObjectItem(player_json, "name")->valuestring;
-                int age = cJSON_GetObjectItem(player_json, "age")->valueint;
-                int goals = cJSON_GetObjectItem(player_json, "goals")->valueint;
-                int assists = cJSON_GetObjectItem(player_json, "assists")->valueint;
-                const char* position = cJSON_GetObjectItem(player_json, "position")->valuestring;
+        cJSON* playersJson = cJSON_GetObjectItem(teamJson, "players");
+        if (cJSON_IsArray(playersJson)) {
+            cJSON* playerJson;
+            cJSON_ArrayForEach(playerJson, playersJson) {
+                int playerId = atoi(cJSON_GetObjectItem(playerJson, "id")->valuestring);
+                const char* playerName = cJSON_GetObjectItem(playerJson, "name")->valuestring;
+                int age = cJSON_GetObjectItem(playerJson, "age")->valueint;
+                int goals = cJSON_GetObjectItem(playerJson, "goals")->valueint;
+                int assists = cJSON_GetObjectItem(playerJson, "assists")->valueint;
+                const char* position = cJSON_GetObjectItem(playerJson, "position")->valuestring;
 
-                if (player_id > max_player_id) {
-                    max_player_id = player_id;
+                if (playerId > maxPlayerId) {
+                    maxPlayerId = playerId;
                 }
 
-                Player* player = create_player_node(player_id, player_name, age, goals, assists, position, name);
-                *root_player = insert_player(*root_player, player);
+                Player* player = create_player_node(playerId, playerName, age, goals, assists, position, name);
+                *rootPlayer = insert_player(*rootPlayer, player);
             }
         }
     }
 
-    cJSON_Delete(root_json);
-    free(json_data);
-    printf("Teams and players have been successfully loaded from %s.\n", decrypted_filepath);
+    cJSON_Delete(rootJson);
+    free(jsonData);
+    printf("Teams and players have been successfully loaded from %s.\n", decryptedFilepath);
 
-    team_count = max_team_id;
-    player_count = max_player_id;
+    teamCount = maxTeamId;
+    playerCount = maxPlayerId;
 
-    remove(decrypted_filepath);
+    remove(decryptedFilepath);
 
-    main_menu(root_team, *root_player, filename);
+    main_menu(rootTeam, *rootPlayer, championshipName);
 }

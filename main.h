@@ -40,8 +40,8 @@ typedef struct Team {
 } Team;
 
 int max(int a, int b);
-extern int team_count;
-extern int player_count;
+extern int teamCount;
+extern int playerCount;
 
 // championship
 void create_championship(const char *championshipName);
@@ -58,7 +58,7 @@ void add_team(Team** root);
 Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
 int get_balance_team(Team* n);
-void displayTeamTree(Team* root, int space);
+void display_team_tree(Team* root, int space);
 Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
@@ -76,7 +76,7 @@ Player* search_player(Player* root, const char* query);
 void show_player(Player** root);
 void delete_player(Player** root);
 void edit_player(Player** root, Team* rootTeam);
-void displayPlayerTree(Player* root, int space);
+void display_player_tree(Player* root, int space);
 Player* insert_player(Player* node, Player* new_player);
 
 

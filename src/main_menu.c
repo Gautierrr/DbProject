@@ -1,5 +1,4 @@
 #include "../main.h"
-#include <stdlib.h>
 
 void free_player_tree(Player* player) {
     if (player == NULL) return;
@@ -19,20 +18,20 @@ void free_team_tree(Team* team) {
     free(team);
 }
 
-void main_menu(Team** root, Player* rootPlayer, const char* championship_file) {
+void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
     int option;
 
     do {        
-        printf("\n\n\n====== Main menu ======\n");
-        printf("1. See the existing teams\n");
-        printf("2. Show a team\n");
-        printf("3. Add a team\n");
-        printf("4. Edit a team\n");
-        printf("5. Delete a team\n");
-        printf("6. See the players interface\n");
-        printf("7. Save the Binary Tree and exit...\n");
-        printf("8. Exit\n");
-        printf("========================\n\n\n");
+        printf("\n============= Main menu =============\n");
+        printf(" 1. See the existing teams\n");
+        printf(" 2. Show a team\n");
+        printf(" 3. Add a team\n");
+        printf(" 4. Edit a team\n");
+        printf(" 5. Delete a team\n");
+        printf(" 6. See the players interface\n");
+        printf(" 7. Save the Binary Tree and exit...\n");
+        printf(" 8. Exit\n");
+        printf("=====================================\n\n\n");
 
         printf("Please choose an option : ");
         
@@ -43,7 +42,7 @@ void main_menu(Team** root, Player* rootPlayer, const char* championship_file) {
 
         switch (option) {
             case 1:
-                displayTeamTree(*root, 0);
+                display_team_tree(*root, 0);
                 break;
             case 2:
                 show_team(root);
@@ -58,10 +57,10 @@ void main_menu(Team** root, Player* rootPlayer, const char* championship_file) {
                 delete_team(root);
                 break;
             case 6:
-                menu_player(root, rootPlayer, championship_file);
+                menu_player(root, rootPlayer, championshipName);
                 break;
             case 7:
-                save_teams_and_players(*root, rootPlayer, championship_file);
+                save_teams_and_players(*root, rootPlayer, championshipName);
             case 8:
                 printf("Bye bye ...\n");
                 free_team_tree(*root);

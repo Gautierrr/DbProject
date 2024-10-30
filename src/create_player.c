@@ -1,10 +1,10 @@
 #include "../main.h"
 
-int player_count = 0;
+int playerCount = 0;
 
 Player* create_new_player(Team* rootTeam) {
-    Player* new_player = (Player*)malloc(sizeof(Player));
-    if (new_player == NULL) {
+    Player* newPlayer = (Player*)malloc(sizeof(Player));
+    if (newPlayer == NULL) {
         printf("Memory allocation failed.\n");
         return NULL;
     }
@@ -12,66 +12,66 @@ Player* create_new_player(Team* rootTeam) {
     getchar();
 
     printf("Enter the name of the team the player belongs to : ");
-    fgets(new_player->team, sizeof(new_player->team), stdin);
-    size_t len = strlen(new_player->team);
-    if (len > 0 && new_player->team[len - 1] == '\n') {
-        new_player->team[len - 1] = '\0';
+    fgets(newPlayer->team, sizeof(newPlayer->team), stdin);
+    size_t len = strlen(newPlayer->team);
+    if (len > 0 && newPlayer->team[len - 1] == '\n') {
+        newPlayer->team[len - 1] = '\0';
     }
 
-    char* endptr;
-    strtol(new_player->team, &endptr, 10);
-    if (*endptr == '\0' && endptr != new_player->team) {
+    char* notNb;
+    strtol(newPlayer->team, &notNb, 10);
+    if (*notNb == '\0' && notNb != newPlayer->team) {
         printf("Error: The team name cannot be a number. Please enter a valid name.\n");
-        free(new_player);
+        free(newPlayer);
         return NULL;
     }
 
-    if (search_team(rootTeam, new_player->team) == NULL) {
+    if (search_team(rootTeam, newPlayer->team) == NULL) {
         printf("Team does not exist. Player not created.\n");
-        free(new_player);
+        free(newPlayer);
         return NULL;
     }
 
-    player_count++;
-    new_player->id = player_count;
+    playerCount++;
+    newPlayer->id = playerCount;
 
     printf("Enter player name: ");
-    fgets(new_player->name, sizeof(new_player->name), stdin);
-    len = strlen(new_player->name);
-    if (len > 0 && new_player->name[len - 1] == '\n') {
-        new_player->name[len - 1] = '\0';
+    fgets(newPlayer->name, sizeof(newPlayer->name), stdin);
+    len = strlen(newPlayer->name);
+    if (len > 0 && newPlayer->name[len - 1] == '\n') {
+        newPlayer->name[len - 1] = '\0';
     }
 
     printf("Enter player age: ");
-    while (scanf("%d", &new_player->age) != 1) {
+    while (scanf("%d", &newPlayer->age) != 1) {
         printf("Invalid input. Please enter a valid player age: ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of goals: ");
-    while (scanf("%d", &new_player->goals) != 1) {
+    while (scanf("%d", &newPlayer->goals) != 1) {
         printf("Invalid input. Please enter a valid number of goals: ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of assists: ");
-    while (scanf("%d", &new_player->assists) != 1) {
+    while (scanf("%d", &newPlayer->assists) != 1) {
         printf("Invalid input. Please enter a valid number of assists: ");
         while (getchar() != '\n');
     }
     getchar();
 
     printf("Enter player position: ");
-    fgets(new_player->position, sizeof(new_player->position), stdin);
-    len = strlen(new_player->position);
-    if (len > 0 && new_player->position[len - 1] == '\n') {
-        new_player->position[len - 1] = '\0';
+    fgets(newPlayer->position, sizeof(newPlayer->position), stdin);
+    len = strlen(newPlayer->position);
+    if (len > 0 && newPlayer->position[len - 1] == '\n') {
+        newPlayer->position[len - 1] = '\0';
     }
 
-    new_player->left = new_player->right = NULL;
-    new_player->height = 1;
+    newPlayer->left = newPlayer->right = NULL;
+    newPlayer->height = 1;
 
-    return new_player;
+    return newPlayer;
 }
 
 int check_player_name(Player* node, const char* name) {
@@ -90,15 +90,15 @@ int check_player_name(Player* node, const char* name) {
     return 0;
 }
 
-Player* insert_player(Player* node, Player* new_player) {
+Player* insert_player(Player* node, Player* newPlayer) {
     if (node == NULL) {
-        return new_player;
+        return newPlayer;
     }
 
-    if (new_player->id < node->id) {
-        node->left = insert_player(node->left, new_player);
-    } else if (new_player->id > node->id) {
-        node->right = insert_player(node->right, new_player);
+    if (newPlayer->id < node->id) {
+        node->left = insert_player(node->left, newPlayer);
+    } else if (newPlayer->id > node->id) {
+        node->right = insert_player(node->right, newPlayer);
     } else {
         return node;
     }
@@ -107,18 +107,18 @@ Player* insert_player(Player* node, Player* new_player) {
 
     int balance = get_balance_player(node);
 
-    if (balance > 1 && new_player->id < node->left->id)
+    if (balance > 1 && newPlayer->id < node->left->id)
         return right_rotate_player(node);
 
-    if (balance < -1 && new_player->id > node->right->id)
+    if (balance < -1 && newPlayer->id > node->right->id)
         return left_rotate_player(node);
 
-    if (balance > 1 && new_player->id > node->left->id) {
+    if (balance > 1 && newPlayer->id > node->left->id) {
         node->left = left_rotate_player(node->left);
         return right_rotate_player(node);
     }
 
-    if (balance < -1 && new_player->id < node->right->id) {
+    if (balance < -1 && newPlayer->id < node->right->id) {
         node->right = right_rotate_player(node->right);
         return left_rotate_player(node);
     }
@@ -127,17 +127,17 @@ Player* insert_player(Player* node, Player* new_player) {
 }
 
 void add_player(Player** root, Team* rootTeam) {
-    Player* new_player = create_new_player(rootTeam);
-    if (new_player != NULL) {
-        int name_exists = check_player_name(*root, new_player->name);
+    Player* newPlayer = create_new_player(rootTeam);
+    if (newPlayer != NULL) {
+        int nameExist = check_player_name(*root, newPlayer->name);
         
-        if (name_exists == 0) {
-            *root = insert_player(*root, new_player);
+        if (nameExist == 0) {
+            *root = insert_player(*root, newPlayer);
             printf("Player added successfully!\n");
         } else {
             printf("Failed to add player: Name already exists.\n");
-            player_count--;
-            free(new_player);
+            playerCount--;
+            free(newPlayer);
         }
     } else {
         printf("Failed to create player.\n");

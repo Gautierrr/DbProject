@@ -1,5 +1,6 @@
 #include "../main.h"
 
+// verif à faire sur encrypt_file
 void encrypt_file(const char *input_filepath, const char *output_filepath, const char *password) {
     unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
 
@@ -49,23 +50,23 @@ void save_player_to_file(Player* player, FILE* file) {
     }
 }
 
-void save_players_for_team(Player* player, const char* team_name, FILE* file, int* is_first_player) {
+void save_players_for_team(Player* player, const char* teamName, FILE* file, int* firstPlayer) {
     if (player == NULL) return;
 
-    save_players_for_team(player->left, team_name, file, is_first_player);
+    save_players_for_team(player->left, teamName, file, firstPlayer);
 
-    if (strcmp(player->team, team_name) == 0) {
-        if (!*is_first_player) {
+    if (strcmp(player->team, teamName) == 0) {
+        if (!*firstPlayer) {
             fprintf(file, ",\n");
         }
         save_player_to_file(player, file);
-        *is_first_player = 0;
+        *firstPlayer = 0;
     }
 
-    save_players_for_team(player->right, team_name, file, is_first_player);
+    save_players_for_team(player->right, teamName, file, firstPlayer);
 }
 
-void save_team_to_file(Team* team, Player* all_players, FILE* file) {
+void save_team_to_file(Team* team, Player* allPlayers, FILE* file) {
     if (team != NULL) {
         fprintf(file, "    {\n");
         fprintf(file, "        \"id\": %d,\n", team->id);
@@ -76,35 +77,35 @@ void save_team_to_file(Team* team, Player* all_players, FILE* file) {
         fprintf(file, "        \"defeat\": %d,\n", team->defeat);
 
         fprintf(file, "        \"players\": [\n");
-        int is_first_player = 1;
-        save_players_for_team(all_players, team->name, file, &is_first_player);
+        int firstPlayer = 1;
+        save_players_for_team(allPlayers, team->name, file, &firstPlayer);
         fprintf(file, "\n        ]\n");
 
         fprintf(file, "    }");
     }
 }
 
-void save_teams_to_file(Team* root, Player* all_players, FILE* file, int* first_team) {
+void save_teams_to_file(Team* root, Player* allPlayers, FILE* file, int* firstTeam) {
     if (root == NULL) return;
 
-    save_teams_to_file(root->left, all_players, file, first_team);
+    save_teams_to_file(root->left, allPlayers, file, firstTeam);
 
-    if (!*first_team) {
+    if (!*firstTeam) {
         fprintf(file, ",\n");
     } else {
-        *first_team = 0;
+        *firstTeam = 0;
     }
 
-    save_team_to_file(root, all_players, file);
+    save_team_to_file(root, allPlayers, file);
 
-    save_teams_to_file(root->right, all_players, file, first_team);
+    save_teams_to_file(root->right, allPlayers, file, firstTeam);
 }
 
-void save_teams_and_players(Team* root, Player* all_players, const char* championship_file) {
+void save_teams_and_players(Team* root, Player* allPlayers, const char* championshipName) {
     char filepath[50];
-    snprintf(filepath, sizeof(filepath), "db/%s.json", championship_file);
-    char encrypted_filepath[50];
-    snprintf(encrypted_filepath, sizeof(encrypted_filepath), "db/%s.json.enc", championship_file);
+    snprintf(filepath, sizeof(filepath), "db/%s.json", championshipName);
+    char encryptedFilepath[50];
+    snprintf(encryptedFilepath, sizeof(encryptedFilepath), "db/%s.json.enc", championshipName);
     
     FILE* file = fopen(filepath, "w");
     if (file == NULL) {
@@ -114,20 +115,20 @@ void save_teams_and_players(Team* root, Player* all_players, const char* champio
 
     fprintf(file, "{\n  \"teams\": [\n");
 
-    int first_team = 1;
-    save_teams_to_file(root, all_players, file, &first_team);
+    int firstTeam = 1;
+    save_teams_to_file(root, allPlayers, file, &firstTeam);
 
     fprintf(file, "\n  ]\n}\n");
 
     fclose(file);
     printf("\nTeams and players saved to %s successfully.\n", filepath);
 
-    char password[100];
+    char password[20];
     printf("Enter a password to encrypt the file: ");
     scanf("%s", password);
 
-    encrypt_file(filepath, encrypted_filepath, password);
+    encrypt_file(filepath, encryptedFilepath, password);
     
     remove(filepath);
-    printf("File encrypted and saved as '%s'.\n", encrypted_filepath);
+    printf("File encrypted and saved as '%s'.\n", encryptedFilepath);
 }

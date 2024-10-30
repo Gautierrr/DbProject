@@ -4,7 +4,7 @@ void show_player(Player** root) {
     getchar();
     char query[50];
 
-    printf("Enter the player ID or name to display: ");
+    printf("Enter the player ID or name to display : ");
     fgets(query, sizeof(query), stdin);
     size_t len = strlen(query);
     if (len > 0 && query[len - 1] == '\n') {

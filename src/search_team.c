@@ -30,10 +30,10 @@ Team* search_team_by_name(Team* node, const char* name) {
 }
 
 Team* search_team(Team* root, const char* query) {
-    char* endptr;
-    int id = strtol(query, &endptr, 10);
+    char* nb;
+    int id = strtol(query, &nb, 10);
 
-    if (*endptr == '\0') {
+    if (*nb == '\0') {
         return search_team_by_id(root, id);
     } else {
         return search_team_by_name(root, query);
