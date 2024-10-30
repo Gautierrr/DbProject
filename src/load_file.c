@@ -63,15 +63,11 @@ Player* create_player_node(int id, const char* name, int age, int goals, int ass
     return player;
 }
 
-void load_file(Team** root_team, Player** root_player, const char* filename) {
+void load_file(Team** root_team, Player** root_player, const char* filename, const char* password) {
     char filepath[50];
     snprintf(filepath, sizeof(filepath), "db/%s.json.enc", filename);
     char decrypted_filepath[50];
     snprintf(decrypted_filepath, sizeof(decrypted_filepath), "db/%s_decrypted.json", filename);
-
-    char password[100];
-    printf("Enter password to decrypt the file: ");
-    scanf("%s", password);
 
     decrypt_file(filepath, decrypted_filepath, password);
 

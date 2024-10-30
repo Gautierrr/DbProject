@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 
     if (strcmp(argv[1], "help") == 0) {
         printf("Usage:\n");
-        printf("  main.exe \"nameChampionship\"            -> Create/load a championship\n");
+        printf("  main.exe \"nameChampionship\"            -> Create/load a championship\n"); // update le help avec le password a mettre pour load un file
         printf("  main.exe show                          -> Show existing championships\n");
         printf("  main.exe delete \"nameChampionship\"     -> Delete an existing championship\n");
     } else if (strcmp(argv[1], "show") == 0) {
@@ -27,12 +27,16 @@ int main(int argc, char *argv[]) {
         FILE *file = fopen(filepath, "r");
         if (file) {
             fclose(file);
+            if (argv[2] == NULL) {
+                printf("To load the championship %s you should enter a password to decrypt this.\n", argv[1]); // refaire la phrase
+                return EXIT_FAILURE;
+            }
             printf("Loading championship: %s\n", argv[1]);
             
             Team* root = NULL;
             Player* rootPlayer = NULL;
 
-            load_file(&root , &rootPlayer, argv[1]);
+            load_file(&root , &rootPlayer, argv[1], argv[2]);
         } else {
             printf("Creating new championship: %s\n", argv[1]);
             create_championship(argv[1]);

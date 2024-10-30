@@ -84,7 +84,7 @@ Player* insert_player(Player* node, Player* new_player);
 
 // save & load
 void save_teams_and_players(Team* root, Player* all_players, const char* championship_file);
-void load_file(Team** root_team, Player** root_player, const char* filename);
+void load_file(Team** root_team, Player** root_player, const char* filename, const char* password);
 
 
 #endif
