@@ -61,6 +61,7 @@ void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
                 break;
             case 7:
                 save_teams_and_players(*root, rootPlayer, championshipName);
+                /* fall through */
             case 8:
                 printf("Bye bye ...\n");
                 free_team_tree(*root);

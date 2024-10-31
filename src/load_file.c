@@ -40,7 +40,8 @@ void decrypt_file(const char *input_filepath, const char *output_filepath, const
 Team* create_team_node(int id, const char* name, int trophies, int win, int equality, int defeat) {
     Team* team = (Team*)malloc(sizeof(Team));
     team->id = id;
-    strncpy(team->name, name, sizeof(team->name));
+    strncpy(team->name, name, sizeof(team->name) - 1);
+    team->name[sizeof(team->name) - 1] = '\0';
     team->trophies = trophies;
     team->win = win;
     team->equality = equality;
@@ -53,12 +54,15 @@ Team* create_team_node(int id, const char* name, int trophies, int win, int equa
 Player* create_player_node(int id, const char* name, int age, int goals, int assists, const char* position, const char* team_name) {
     Player* player = (Player*)malloc(sizeof(Player));
     player->id = id;
-    strncpy(player->name, name, sizeof(player->name));
+    strncpy(player->name, name, sizeof(player->name) - 1);
+    player->name[sizeof(player->name) - 1] = '\0';
     player->age = age;
     player->goals = goals;
     player->assists = assists;
-    strncpy(player->position, position, sizeof(player->position));
-    strncpy(player->team, team_name, sizeof(player->team));
+    strncpy(player->position, position, sizeof(player->position) - 1);
+    player->position[sizeof(player->position) - 1] = '\0';
+    strncpy(player->team, team_name, sizeof(player->team) - 1);
+    player->team[sizeof(player->team) - 1] = '\0';
     player->left = player->right = NULL;
     player->height = 1;  
     return player;

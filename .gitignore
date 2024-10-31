@@ -8,3 +8,5 @@ db/
 
 cJSON.h
 cJSON.c
+
+Makefile
