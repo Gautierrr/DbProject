@@ -1,0 +1,40 @@
+{
+  "teams": [
+    {
+        "id": 1,
+        "name": "psg",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+            {
+                "id": "1",
+                "name": "4",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "om",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 44,
+        "players": [
+            {
+                "id": "3",
+                "name": "pff",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            }
+        ]
+    }
+  ]
+}
