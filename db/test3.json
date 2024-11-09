@@ -1,0 +1,180 @@
+{
+  "teams": [
+    {
+        "id": 1,
+        "name": "psg",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+            {
+                "id": "1",
+                "name": "4",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "3",
+                "name": "2",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "4",
+                "name": "tty",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "5",
+                "name": "ddcx",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "8",
+                "name": "mlk",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "9",
+                "name": "hggf",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "om",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+            {
+                "id": "2",
+                "name": "p",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "6",
+                "name": "ret",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            },
+            {
+                "id": "7",
+                "name": "qss",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "lyon",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+            {
+                "id": "10",
+                "name": "mmokggs",
+                "age": 4,
+                "goals": 4,
+                "assists": 4,
+                "position": "4"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "ffg",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    },
+    {
+        "id": 5,
+        "name": "dddgfhh",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    },
+    {
+        "id": 6,
+        "name": "ddvg",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    },
+    {
+        "id": 7,
+        "name": "edsw",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    },
+    {
+        "id": 8,
+        "name": "okok",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    },
+    {
+        "id": 9,
+        "name": "lpmjg",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    }
+  ]
+}

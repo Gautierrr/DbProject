@@ -1,0 +1,15 @@
+{
+  "teams": [
+    {
+        "id": 1,
+        "name": "psg",
+        "trophies": 4,
+        "win": 4,
+        "equality": 4,
+        "defeat": 4,
+        "players": [
+
+        ]
+    }
+  ]
+}
