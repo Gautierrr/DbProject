@@ -1,6 +1,5 @@
 #include "../main.h"
 
-// comprendre / verifier utilite de size_t
 void show_team(Team** root) {
     getchar();
     char query[50];

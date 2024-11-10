@@ -10,6 +10,7 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
+// Voir pour supprimer la struct championship, inutile !? :
 typedef struct Championship {
     char name[20];
 } Championship;
@@ -47,13 +48,13 @@ extern int playerCount;
 void create_championship(const char *championshipName);
 void show_championships();
 void delete_championship(const char *championshipName);
-void main_menu(Team** root, Player* rootPlayer, const char* championship_file);
+void main_menu(Team** root, Player* rootPlayer, const char* championshipName);
 int file_exist(const char *filepath);
 
 // team
 int height_team(Team* n);
 Team* create_new_team();
-Team* insert_team(Team* node, Team* new_team);
+Team* insert_team(Team* node, Team* newTeam);
 void add_team(Team** root);
 Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
@@ -63,10 +64,9 @@ Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
 void show_team(Team** root);
-Team* insert_team(Team* node, Team* new_team);
 
 // player
-void menu_player(Team** root, Player* rootPlayer, const char* championship_file);
+void menu_player(Team** root, Player* rootPlayer, const char* championshipName);
 void add_player(Player** root, Team* rootTeam);
 int height_player(Player* n);
 Player* right_rotate_player(Player* y);
@@ -77,14 +77,14 @@ void show_player(Player** root);
 void delete_player(Player** root);
 void edit_player(Player** root, Team* rootTeam);
 void display_player_tree(Player* root, int space);
-Player* insert_player(Player* node, Player* new_player);
+Player* insert_player(Player* node, Player* newPlayer);
 
 
 
 
 // save & load
-void save_teams_and_players(Team* root, Player* all_players, const char* championship_file);
-void load_file(Team** root_team, Player** root_player, const char* filename, const char* password);
+void save_teams_and_players(Team* root, Player* allPlayers, const char* championshipName);
+void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipName, const char* password);
 
 
 #endif

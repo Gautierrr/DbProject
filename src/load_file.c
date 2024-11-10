@@ -1,13 +1,12 @@
 #include "../main.h"
 
-// Revoir toute cette partie
-void decrypt_file(const char *input_filepath, const char *output_filepath, const char *password) {
+void decrypt_file(const char *inputFilepath, const char *outputFilepath, const char *password) {
     unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
 
     EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
     
-    FILE *infile = fopen(input_filepath, "rb");
-    FILE *outfile = fopen(output_filepath, "wb");
+    FILE *infile = fopen(inputFilepath, "rb");
+    FILE *outfile = fopen(outputFilepath, "wb");
     
     if (!infile || !outfile) {
         perror("File open error");
@@ -22,10 +21,10 @@ void decrypt_file(const char *input_filepath, const char *output_filepath, const
     int len;
 
     while (1) {
-        size_t bytes_read = fread(buffer, 1, sizeof(buffer), infile);
-        if (bytes_read <= 0) break;
+        size_t bytesRead = fread(buffer, 1, sizeof(buffer), infile);
+        if (bytesRead <= 0) break;
 
-        EVP_DecryptUpdate(ctx, plaintext, &len, buffer, bytes_read);
+        EVP_DecryptUpdate(ctx, plaintext, &len, buffer, bytesRead);
         fwrite(plaintext, 1, len, outfile);
     }
 
