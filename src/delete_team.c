@@ -1,6 +1,6 @@
 #include "../main.h"
 
-Team* find_min(Team* node) {
+Team* find_team_min(Team* node) {
     if (node == NULL) {
         return NULL;
     }
@@ -12,15 +12,15 @@ Team* find_min(Team* node) {
     return node;
 }
 
-Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
+Team* delete_team_balancing(Team* root, Team* nodeToDelete) {
     if (root == NULL) {
         return root;
     }
 
     if (nodeToDelete->id < root->id) {
-        root->left = delete_team_and_balancing(root->left, nodeToDelete);
+        root->left = delete_team_balancing(root->left, nodeToDelete);
     } else if (nodeToDelete->id > root->id) {
-        root->right = delete_team_and_balancing(root->right, nodeToDelete);
+        root->right = delete_team_balancing(root->right, nodeToDelete);
     } else {
         if (root->left == NULL || root->right == NULL) {
             Team* temp = root->left ? root->left : root->right;
@@ -33,7 +33,7 @@ Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
             }
             free(temp);
         } else {
-            Team* temp = find_min(root->right);
+            Team* temp = find_team_min(root->right);
             root->id = temp->id;
             strcpy(root->name, temp->name);
             root->trophies = temp->trophies;
@@ -41,7 +41,7 @@ Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
             root->equality = temp->equality;
             root->defeat = temp->defeat;
 
-            root->right = delete_team_and_balancing(root->right, temp);
+            root->right = delete_team_balancing(root->right, temp);
         }
     }
 
@@ -85,7 +85,7 @@ void delete_team(Team** root) {
     Team* nodeToDelete = search_team(*root, query);
     
     if (nodeToDelete != NULL) {
-        *root = delete_team_and_balancing(*root, nodeToDelete);
+        *root = delete_team_balancing(*root, nodeToDelete);
         printf("Team deleted successfully!\n");
     } else {
         printf("Team not found.\n");

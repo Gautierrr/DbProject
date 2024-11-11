@@ -1,6 +1,6 @@
 #include "../main.h"
 
-Player* find_min_player(Player* node) {
+Player* find_player_min(Player* node) {
     if (node == NULL) {
         return NULL;
     }
@@ -12,15 +12,15 @@ Player* find_min_player(Player* node) {
     return node;
 }
 
-Player* delete_player_and_balancing(Player* root, Player* nodeToDelete) {
+Player* delete_player_balancing(Player* root, Player* nodeToDelete) {
     if (root == NULL) {
         return root;
     }
 
     if (nodeToDelete->id < root->id) {
-        root->left = delete_player_and_balancing(root->left, nodeToDelete);
+        root->left = delete_player_balancing(root->left, nodeToDelete);
     } else if (nodeToDelete->id > root->id) {
-        root->right = delete_player_and_balancing(root->right, nodeToDelete);
+        root->right = delete_player_balancing(root->right, nodeToDelete);
     } else {
         if (root->left == NULL || root->right == NULL) {
             Player* temp = root->left ? root->left : root->right;
@@ -33,7 +33,7 @@ Player* delete_player_and_balancing(Player* root, Player* nodeToDelete) {
             }
             free(temp);
         } else {
-            Player* temp = find_min_player(root->right);
+            Player* temp = find_player_min(root->right);
             root->id = temp->id;
             strcpy(root->name, temp->name);
             strcpy(root->team, temp->team);
@@ -42,7 +42,7 @@ Player* delete_player_and_balancing(Player* root, Player* nodeToDelete) {
             root->assists = temp->assists;
             strcpy(root->position, temp->position);
 
-            root->right = delete_player_and_balancing(root->right, temp);
+            root->right = delete_player_balancing(root->right, temp);
         }
     }
 
@@ -86,7 +86,7 @@ void delete_player(Player** root) {
     Player* nodeToDelete = search_player(*root, query);
     
     if (nodeToDelete != NULL) {
-        *root = delete_player_and_balancing(*root, nodeToDelete);
+        *root = delete_player_balancing(*root, nodeToDelete);
         printf("Player deleted successfully!\n");
     } else {
         printf("Player not found.\n");

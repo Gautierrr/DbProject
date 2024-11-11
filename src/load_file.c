@@ -1,41 +1,5 @@
 #include "../main.h"
 
-void decrypt_file(const char *inputFilepath, const char *outputFilepath, const char *password) {
-    unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
-
-    EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
-    
-    FILE *infile = fopen(inputFilepath, "rb");
-    FILE *outfile = fopen(outputFilepath, "wb");
-    
-    if (!infile || !outfile) {
-        perror("File open error");
-        return;
-    }
-
-    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv);
-    
-    unsigned char buffer[1024];
-    unsigned char plaintext[1024 + EVP_MAX_BLOCK_LENGTH];
-    int len;
-
-    while (1) {
-        size_t bytesRead = fread(buffer, 1, sizeof(buffer), infile);
-        if (bytesRead <= 0) break;
-
-        EVP_DecryptUpdate(ctx, plaintext, &len, buffer, bytesRead);
-        fwrite(plaintext, 1, len, outfile);
-    }
-
-    EVP_DecryptFinal_ex(ctx, plaintext, &len);
-    fwrite(plaintext, 1, len, outfile);
-    
-    EVP_CIPHER_CTX_free(ctx);
-    fclose(infile);
-    fclose(outfile);
-}
-
 Team* create_team_node(int id, const char* name, int trophies, int win, int equality, int defeat) {
     Team* team = (Team*)malloc(sizeof(Team));
     team->id = id;
@@ -73,7 +37,7 @@ void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipNam
     char decryptedFilepath[50];
     snprintf(decryptedFilepath, sizeof(decryptedFilepath), "db/%s_decrypted.json", championshipName);
 
-    decrypt_file(filepath, decryptedFilepath, password);
+    encrypt_or_decrypt(filepath, decryptedFilepath, password, 2);
 
     FILE* file = fopen(decryptedFilepath, "r");
     if (file == NULL) {

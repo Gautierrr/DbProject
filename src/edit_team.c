@@ -26,7 +26,7 @@ void edit_team(Team** root) {
     printf("Equalities : %d\n", teamToModify->equality);
     printf("Defeats : %d\n", teamToModify->defeat);
 
-    printf("\nEnter new team name (or press Enter to keep the current) : ");
+    printf("\nEnter new team name (or press Enter to keep the current): ");
     char newName[50];
     fgets(newName, sizeof(newName), stdin);
     len = strlen(newName);
@@ -37,28 +37,28 @@ void edit_team(Team** root) {
         strcpy(teamToModify->name, newName);
     }
 
-    printf("Enter new number of trophies (or press Enter to keep the current) : ");
+    printf("Enter new number of trophies (or press Enter to keep the current): ");
     char trophiesInput[10];
     fgets(trophiesInput, sizeof(trophiesInput), stdin);
     if (strlen(trophiesInput) > 0 && trophiesInput[0] != '\n') {
         teamToModify->trophies = atoi(trophiesInput);
     }
 
-    printf("Enter new number of wins (or press Enter to keep the current) : ");
+    printf("Enter new number of wins (or press Enter to keep the current): ");
     char winsInput[10];
     fgets(winsInput, sizeof(winsInput), stdin);
     if (strlen(winsInput) > 0 && winsInput[0] != '\n') {
         teamToModify->win = atoi(winsInput);
     }
 
-    printf("Enter new number of equalities (or press Enter to keep the current) : ");
+    printf("Enter new number of equalities (or press Enter to keep the current): ");
     char equalitiesInput[10];
     fgets(equalitiesInput, sizeof(equalitiesInput), stdin);
     if (strlen(equalitiesInput) > 0 && equalitiesInput[0] != '\n') {
         teamToModify->equality = atoi(equalitiesInput);
     }
 
-    printf("Enter new number of defeats (or press Enter to keep the current) : ");
+    printf("Enter new number of defeats (or press Enter to keep the current): ");
     char defeatsInput[10];
     fgets(defeatsInput, sizeof(defeatsInput), stdin);
     if (strlen(defeatsInput) > 0 && defeatsInput[0] != '\n') {

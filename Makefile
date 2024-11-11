@@ -24,6 +24,7 @@ SRC = main.c \
       src/edit_player.c \
       src/delete_player.c \
       src/display_player_tree.c \
+      src/encrypt_or_decrypt.c \
       src/save_to_file.c \
       src/load_file.c \
       cJSON.c

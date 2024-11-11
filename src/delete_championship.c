@@ -10,7 +10,7 @@ void delete_championship(const char *championshipName) {
     }
 
     if (remove(filepath) == 0) {
-        printf("Championship '%s' deleted successfully.\n", championshipName);
+        printf("Championship '%s' deleted successfully!\n", championshipName);
     } else {
         printf("Error deleting championship '%s'.\n", championshipName);
     }

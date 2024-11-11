@@ -11,7 +11,7 @@ Player* create_new_player(Team* rootTeam) {
 
     getchar();
 
-    printf("Enter the name of the team the player belongs to : ");
+    printf("Enter the name of the team the player belongs to: ");
     fgets(newPlayer->team, sizeof(newPlayer->team), stdin);
     size_t len = strlen(newPlayer->team);
     if (len > 0 && newPlayer->team[len - 1] == '\n') {
@@ -21,7 +21,7 @@ Player* create_new_player(Team* rootTeam) {
     char* notNb;
     strtol(newPlayer->team, &notNb, 10);
     if (*notNb == '\0' && notNb != newPlayer->team) {
-        printf("Error: The team name cannot be a number. Please enter a valid name.\n");
+        printf("Error: the team name cannot be a number. Please enter a valid name.\n");
         free(newPlayer);
         return NULL;
     }
@@ -135,7 +135,7 @@ void add_player(Player** root, Team* rootTeam) {
             *root = insert_player(*root, newPlayer);
             printf("Player added successfully!\n");
         } else {
-            printf("Failed to add player: Name already exists.\n");
+            printf("Failed to add player: name already exists.\n");
             playerCount--;
             free(newPlayer);
         }

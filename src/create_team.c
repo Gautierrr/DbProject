@@ -22,25 +22,25 @@ Team* create_new_team() {
 
     printf("Enter number of trophies: ");
     while (scanf("%d", &newTeam->trophies) != 1) {
-        printf("Invalid input. Please enter a valid number of trophies : ");
+        printf("Invalid input. Please enter a valid number of trophies: ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of wins: ");
     while (scanf("%d", &newTeam->win) != 1) {
-        printf("Invalid input. Please enter a valid number of wins : ");
+        printf("Invalid input. Please enter a valid number of wins: ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of equalities: ");
     while (scanf("%d", &newTeam->equality) != 1) {
-        printf("Invalid input. Please enter a valid number of equalities : ");
+        printf("Invalid input. Please enter a valid number of equalities: ");
         while (getchar() != '\n');
     }
 
     printf("Enter number of defeats: ");
     while (scanf("%d", &newTeam->defeat) != 1) {
-        printf("Invalid input. Please enter a valid number of defeats : ");
+        printf("Invalid input. Please enter a valid number of defeats: ");
         while (getchar() != '\n');
     }
 
@@ -50,7 +50,7 @@ Team* create_new_team() {
     return newTeam;
 }
 
-int check_name(Team* node, const char* name) {
+int check_team_name(Team* node, const char* name) {
     if (node == NULL) {
         return 0;
     }
@@ -59,7 +59,7 @@ int check_name(Team* node, const char* name) {
         return 1;  // name already exist
     } 
     
-    if (check_name(node->left, name) || check_name(node->right, name)) {
+    if (check_team_name(node->left, name) || check_team_name(node->right, name)) {
         return 1;
     }
 
@@ -105,13 +105,13 @@ Team* insert_team(Team* node, Team* newTeam) {
 void add_team(Team** root) {
     Team* newTeam = create_new_team();
     if (newTeam != NULL) {
-        int name = check_name(*root, newTeam->name);
+        int name = check_team_name(*root, newTeam->name);
         
         if (name == 0) {
             *root = insert_team(*root, newTeam);
             printf("Team added successfully!\n");
         } else {
-            printf("Failed to add team: Name already exist.\n");
+            printf("Failed to add team: name already exist.\n");
             free(newTeam);
         }
     } else {

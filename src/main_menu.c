@@ -60,7 +60,7 @@ void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
                 menu_player(root, rootPlayer, championshipName);
                 break;
             case 7:
-                save_teams_and_players(*root, rootPlayer, championshipName);
+                save_all(*root, rootPlayer, championshipName);
                 /* fall through */
             case 8:
                 printf("Bye bye ...\n");

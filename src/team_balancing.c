@@ -1,6 +1,5 @@
 #include "../main.h"
 
-// temporairement ici, créer un fichier specialement pr la fonction ?? impossible a mettre ds main.h ...
 int max(int a, int b) {
     return (a > b) ? a : b;
 }

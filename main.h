@@ -10,11 +10,6 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
-// Voir pour supprimer la struct championship, inutile !? :
-typedef struct Championship {
-    char name[20];
-} Championship;
-
 typedef struct Player {
     int id;
     char name[20];
@@ -83,7 +78,8 @@ Player* insert_player(Player* node, Player* newPlayer);
 
 
 // save & load
-void save_teams_and_players(Team* root, Player* allPlayers, const char* championshipName);
+void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, const char *password, const int value);
+void save_all(Team* root, Player* allPlayers, const char* championshipName);
 void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipName, const char* password);
 
 
