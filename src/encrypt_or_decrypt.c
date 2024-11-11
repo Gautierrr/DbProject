@@ -1,6 +1,6 @@
 #include "../main.h"
 
-void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, const char *password, const int value) {
+void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, const char *password, const size_t value) {
     unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
 
     EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
@@ -22,7 +22,8 @@ void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, c
     
     unsigned char buffer[1024];
     unsigned char text[1024 + EVP_MAX_BLOCK_LENGTH];
-    int len;
+    // si bug on repasse en int len
+    int32_t len;
 
     while (1) {
         size_t bytesRead = fread(buffer, 1, sizeof(buffer), infile);

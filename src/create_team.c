@@ -1,6 +1,6 @@
 #include "../main.h"
 
-int teamCount = 0;
+size_t teamCount = 0;
 
 Team* create_new_team() {
     Team* newTeam = (Team*)malloc(sizeof(Team));
@@ -20,29 +20,35 @@ Team* create_new_team() {
         newTeam->name[len - 1] = '\0';
     }
 
+    int16_t temp;
+
     printf("Enter number of trophies: ");
-    while (scanf("%d", &newTeam->trophies) != 1) {
-        printf("Invalid input. Please enter a valid number of trophies: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of trophies: ");
         while (getchar() != '\n');
     }
+    newTeam->trophies = (size_t)temp;
 
     printf("Enter number of wins: ");
-    while (scanf("%d", &newTeam->win) != 1) {
-        printf("Invalid input. Please enter a valid number of wins: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of wins: ");
         while (getchar() != '\n');
     }
+    newTeam->win = (size_t)temp;
 
     printf("Enter number of equalities: ");
-    while (scanf("%d", &newTeam->equality) != 1) {
-        printf("Invalid input. Please enter a valid number of equalities: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of equalities: ");
         while (getchar() != '\n');
     }
+    newTeam->equality = (size_t)temp;
 
     printf("Enter number of defeats: ");
-    while (scanf("%d", &newTeam->defeat) != 1) {
-        printf("Invalid input. Please enter a valid number of defeats: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of defeats: ");
         while (getchar() != '\n');
     }
+    newTeam->defeat = (size_t)temp;
 
     newTeam->left = newTeam->right = NULL;
     newTeam->height = 1;
@@ -81,7 +87,7 @@ Team* insert_team(Team* node, Team* newTeam) {
 
     node->height = 1 + max(height_team(node->left), height_team(node->right));
 
-    int balance = get_balance_team(node);
+    int8_t balance = get_balance_team(node);
 
     if (balance > 1 && newTeam->id < node->left->id)
         return right_rotate_team(node);
@@ -105,7 +111,7 @@ Team* insert_team(Team* node, Team* newTeam) {
 void add_team(Team** root) {
     Team* newTeam = create_new_team();
     if (newTeam != NULL) {
-        int name = check_team_name(*root, newTeam->name);
+        int8_t name = check_team_name(*root, newTeam->name);
         
         if (name == 0) {
             *root = insert_team(*root, newTeam);

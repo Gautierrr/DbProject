@@ -1,6 +1,6 @@
 #include "../main.h"
 
-int max(int a, int b) {
+int max(size_t a, size_t b) {
     return (a > b) ? a : b;
 }
 

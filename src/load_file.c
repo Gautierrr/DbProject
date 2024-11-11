@@ -1,6 +1,6 @@
 #include "../main.h"
 
-Team* create_team_node(int id, const char* name, int trophies, int win, int equality, int defeat) {
+Team* create_team_node(size_t id, const char* name, size_t trophies, size_t win, size_t equality, size_t defeat) {
     Team* team = (Team*)malloc(sizeof(Team));
     team->id = id;
     strncpy(team->name, name, sizeof(team->name) - 1);
@@ -14,7 +14,7 @@ Team* create_team_node(int id, const char* name, int trophies, int win, int equa
     return team;
 }
 
-Player* create_player_node(int id, const char* name, int age, int goals, int assists, const char* position, const char* team_name) {
+Player* create_player_node(size_t id, const char* name, size_t age, size_t goals, size_t assists, const char* position, const char* team_name) {
     Player* player = (Player*)malloc(sizeof(Player));
     player->id = id;
     strncpy(player->name, name, sizeof(player->name) - 1);
@@ -70,20 +70,20 @@ void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipNam
         return;
     }
 
-    int maxTeamId = 0;
-    int maxPlayerId = 0;
+    size_t maxTeamId = 0;
+    size_t maxPlayerId = 0;
     cJSON* teamJson;
 
     cJSON_ArrayForEach(teamJson, teamsJson) {
-        int id = cJSON_GetObjectItem(teamJson, "id")->valueint;
+        size_t id = cJSON_GetObjectItem(teamJson, "id")->valueint;
         if (id > maxTeamId) {
             maxTeamId = id;
         }
         const char* name = cJSON_GetObjectItem(teamJson, "name")->valuestring;
-        int trophies = cJSON_GetObjectItem(teamJson, "trophies")->valueint;
-        int win = cJSON_GetObjectItem(teamJson, "win")->valueint;
-        int equality = cJSON_GetObjectItem(teamJson, "equality")->valueint;
-        int defeat = cJSON_GetObjectItem(teamJson, "defeat")->valueint;
+        size_t trophies = cJSON_GetObjectItem(teamJson, "trophies")->valueint;
+        size_t win = cJSON_GetObjectItem(teamJson, "win")->valueint;
+        size_t equality = cJSON_GetObjectItem(teamJson, "equality")->valueint;
+        size_t defeat = cJSON_GetObjectItem(teamJson, "defeat")->valueint;
 
         Team* team = create_team_node(id, name, trophies, win, equality, defeat);
         *rootTeam = insert_team(*rootTeam, team);
@@ -92,11 +92,11 @@ void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipNam
         if (cJSON_IsArray(playersJson)) {
             cJSON* playerJson;
             cJSON_ArrayForEach(playerJson, playersJson) {
-                int playerId = atoi(cJSON_GetObjectItem(playerJson, "id")->valuestring);
+                size_t playerId = atoi(cJSON_GetObjectItem(playerJson, "id")->valuestring);
                 const char* playerName = cJSON_GetObjectItem(playerJson, "name")->valuestring;
-                int age = cJSON_GetObjectItem(playerJson, "age")->valueint;
-                int goals = cJSON_GetObjectItem(playerJson, "goals")->valueint;
-                int assists = cJSON_GetObjectItem(playerJson, "assists")->valueint;
+                size_t age = cJSON_GetObjectItem(playerJson, "age")->valueint;
+                size_t goals = cJSON_GetObjectItem(playerJson, "goals")->valueint;
+                size_t assists = cJSON_GetObjectItem(playerJson, "assists")->valueint;
                 const char* position = cJSON_GetObjectItem(playerJson, "position")->valuestring;
 
                 if (playerId > maxPlayerId) {

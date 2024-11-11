@@ -52,7 +52,7 @@ Player* delete_player_balancing(Player* root, Player* nodeToDelete) {
 
     root->height = 1 + max(height_player(root->left), height_player(root->right));
 
-    int balance = get_balance_player(root);
+    int8_t balance = get_balance_player(root);
 
     if (balance > 1 && get_balance_player(root->left) >= 0) {
         return right_rotate_player(root);

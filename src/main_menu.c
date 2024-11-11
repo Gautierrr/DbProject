@@ -19,7 +19,7 @@ void free_team_tree(Team* team) {
 }
 
 void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
-    int option;
+    int8_t option;
 
     do {        
         printf("\n============= Main menu =============\n");

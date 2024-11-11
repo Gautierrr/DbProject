@@ -1,6 +1,6 @@
 #include "../main.h"
 
-int playerCount = 0;
+size_t playerCount = 0;
 
 Player* create_new_player(Team* rootTeam) {
     Player* newPlayer = (Player*)malloc(sizeof(Player));
@@ -42,23 +42,28 @@ Player* create_new_player(Team* rootTeam) {
         newPlayer->name[len - 1] = '\0';
     }
 
+    int16_t temp;
+
     printf("Enter player age: ");
-    while (scanf("%d", &newPlayer->age) != 1) {
-        printf("Invalid input. Please enter a valid player age: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative player age: ");
         while (getchar() != '\n');
     }
+    newPlayer->age = (size_t)temp;
 
     printf("Enter number of goals: ");
-    while (scanf("%d", &newPlayer->goals) != 1) {
-        printf("Invalid input. Please enter a valid number of goals: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of goals: ");
         while (getchar() != '\n');
     }
+    newPlayer->goals = (size_t)temp;
 
     printf("Enter number of assists: ");
-    while (scanf("%d", &newPlayer->assists) != 1) {
-        printf("Invalid input. Please enter a valid number of assists: ");
+    while (scanf("%d", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of assists: ");
         while (getchar() != '\n');
     }
+    newPlayer->assists = (size_t)temp;
     getchar();
 
     printf("Enter player position: ");
@@ -105,7 +110,7 @@ Player* insert_player(Player* node, Player* newPlayer) {
 
     node->height = 1 + max(height_player(node->left), height_player(node->right));
 
-    int balance = get_balance_player(node);
+    int8_t balance = get_balance_player(node);
 
     if (balance > 1 && newPlayer->id < node->left->id)
         return right_rotate_player(node);
@@ -129,7 +134,7 @@ Player* insert_player(Player* node, Player* newPlayer) {
 void add_player(Player** root, Team* rootTeam) {
     Player* newPlayer = create_new_player(rootTeam);
     if (newPlayer != NULL) {
-        int nameExist = check_player_name(*root, newPlayer->name);
+        int8_t nameExist = check_player_name(*root, newPlayer->name);
         
         if (nameExist == 0) {
             *root = insert_player(*root, newPlayer);

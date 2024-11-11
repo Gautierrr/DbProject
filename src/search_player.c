@@ -1,6 +1,6 @@
 #include "../main.h"
 
-Player* search_player_by_id(Player* node, int id) {
+Player* search_player_by_id(Player* node, size_t id) {
     if (node == NULL || node->id == id) {
         return node;
     }
@@ -31,7 +31,7 @@ Player* search_player_by_name(Player* node, const char* name) {
 
 Player* search_player(Player* root, const char* query) {
     char* nb;
-    int id = strtol(query, &nb, 10);
+    size_t id = strtol(query, &nb, 10);
 
     if (*nb == '\0') {
         return search_player_by_id(root, id);

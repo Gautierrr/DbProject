@@ -52,25 +52,37 @@ void edit_player(Player** root, Team* rootTeam) {
         strcpy(playerToModify->name, newName);
     }
 
+    int16_t temp;
+    char input[10];
+
     printf("Enter new age (or press Enter to keep the current): ");
-    char ageInput[10];
-    fgets(ageInput, sizeof(ageInput), stdin);
-    if (strlen(ageInput) > 0 && ageInput[0] != '\n') {
-        playerToModify->age = atoi(ageInput);
+    fgets(input, sizeof(input), stdin);
+    if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
+        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+            playerToModify->age = (size_t)temp;
+        } else {
+            printf("Invalid input. Keeping the current age.\n");
+        }
     }
 
     printf("Enter new number of goals (or press Enter to keep the current): ");
-    char goalsInput[10];
-    fgets(goalsInput, sizeof(goalsInput), stdin);
-    if (strlen(goalsInput) > 0 && goalsInput[0] != '\n') {
-        playerToModify->goals = atoi(goalsInput);
+    fgets(input, sizeof(input), stdin);
+    if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
+        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+            playerToModify->goals = (size_t)temp;
+        } else {
+            printf("Invalid input. Keeping the current number of goals.\n");
+        }
     }
 
     printf("Enter new number of assists (or press Enter to keep the current): ");
-    char assistsInput[10];
-    fgets(assistsInput, sizeof(assistsInput), stdin);
-    if (strlen(assistsInput) > 0 && assistsInput[0] != '\n') {
-        playerToModify->assists = atoi(assistsInput);
+    fgets(input, sizeof(input), stdin);
+    if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
+        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+            playerToModify->assists = (size_t)temp;
+        } else {
+            printf("Invalid input. Keeping the current number of assists.\n");
+        }
     }
 
     printf("Enter new position (or press Enter to keep the current): ");

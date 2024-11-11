@@ -11,33 +11,33 @@
 #include <openssl/rand.h>
 
 typedef struct Player {
-    int id;
+    size_t id;
     char name[20];
     char team[30];
-    int age;
-    int goals;
-    int assists;
+    size_t age;
+    size_t goals;
+    size_t assists;
     char position[10];
     struct Player* left;
     struct Player* right;
-    int height;
+    size_t height;
 } Player;
 
 typedef struct Team {
-    int id;
+    size_t id;
     char name[30];
-    int trophies;
-    int win;
-    int equality;
-    int defeat;
+    size_t trophies;
+    size_t win;
+    size_t equality;
+    size_t defeat;
     struct Team* left;
     struct Team* right;
-    int height;
+    size_t height;
 } Team;
 
-int max(int a, int b);
-extern int teamCount;
-extern int playerCount;
+int max(size_t a, size_t b);
+extern size_t teamCount;
+extern size_t playerCount;
 
 // championship
 void create_championship(const char *championshipName);
@@ -54,7 +54,7 @@ void add_team(Team** root);
 Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
 int get_balance_team(Team* n);
-void display_team_tree(Team* root, int space);
+void display_team_tree(Team* root, size_t space);
 Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
@@ -71,14 +71,14 @@ Player* search_player(Player* root, const char* query);
 void show_player(Player** root);
 void delete_player(Player** root);
 void edit_player(Player** root, Team* rootTeam);
-void display_player_tree(Player* root, int space);
+void display_player_tree(Player* root, size_t space);
 Player* insert_player(Player* node, Player* newPlayer);
 
 
 
 
 // save & load
-void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, const char *password, const int value);
+void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, const char *password, const size_t value);
 void save_all(Team* root, Player* allPlayers, const char* championshipName);
 void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipName, const char* password);
 

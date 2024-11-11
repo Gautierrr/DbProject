@@ -1,7 +1,7 @@
 #include "../main.h"
 
 void menu_player(Team** root, Player* rootPlayer, const char* championshipName) {
-    int option;
+    int8_t option;
 
     do {        
         printf("\n\n\n========== Players interface ==========\n");

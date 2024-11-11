@@ -13,7 +13,7 @@ void save_player_to_file(Player* player, FILE* file) {
     }
 }
 
-void save_players_to_team(Player* player, const char* teamName, FILE* file, int* firstPlayer) {
+void save_players_to_team(Player* player, const char* teamName, FILE* file, size_t* firstPlayer) {
     if (player == NULL) return;
 
     save_players_to_team(player->left, teamName, file, firstPlayer);
@@ -40,7 +40,7 @@ void save_team_to_file(Team* team, Player* allPlayers, FILE* file) {
         fprintf(file, "        \"defeat\": %d,\n", team->defeat);
 
         fprintf(file, "        \"players\": [\n");
-        int firstPlayer = 1;
+        size_t firstPlayer = 1;
         save_players_to_team(allPlayers, team->name, file, &firstPlayer);
         fprintf(file, "\n        ]\n");
 
@@ -48,7 +48,7 @@ void save_team_to_file(Team* team, Player* allPlayers, FILE* file) {
     }
 }
 
-void save_teams_to_file(Team* root, Player* allPlayers, FILE* file, int* firstTeam) {
+void save_teams_to_file(Team* root, Player* allPlayers, FILE* file, size_t* firstTeam) {
     if (root == NULL) return;
 
     save_teams_to_file(root->left, allPlayers, file, firstTeam);
@@ -78,7 +78,7 @@ void save_all(Team* root, Player* allPlayers, const char* championshipName) {
 
     fprintf(file, "{\n  \"teams\": [\n");
 
-    int firstTeam = 1;
+    size_t firstTeam = 1;
     save_teams_to_file(root, allPlayers, file, &firstTeam);
 
     fprintf(file, "\n  ]\n}\n");

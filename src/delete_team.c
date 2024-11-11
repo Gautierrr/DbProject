@@ -51,7 +51,7 @@ Team* delete_team_balancing(Team* root, Team* nodeToDelete) {
 
     root->height = 1 + max(height_team(root->left), height_team(root->right));
 
-    int balance = get_balance_team(root);
+    int8_t balance = get_balance_team(root);
 
     if (balance > 1 && get_balance_team(root->left) >= 0) {
         return right_rotate_team(root);
