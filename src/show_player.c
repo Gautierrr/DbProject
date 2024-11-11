@@ -14,12 +14,12 @@ void show_player(Player** root) {
     Player* displayPlayer = search_player(*root, query);
 
     if (displayPlayer == NULL) {
-        printf("Player not found.\n");
+        printf("Player not found.\n\n");
         return;
     }
 
-    printf("Current player details:\n");
-    printf("ID: %d\n", displayPlayer->id);
+    printf("\nCurrent player details:\n");
+    printf("\nID: %d\n", displayPlayer->id);
     printf("Name: %s\n", displayPlayer->name);
     printf("Team: %s\n", displayPlayer->team);
     printf("Age: %d\n", displayPlayer->age);

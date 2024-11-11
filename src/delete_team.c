@@ -86,8 +86,8 @@ void delete_team(Team** root) {
     
     if (nodeToDelete != NULL) {
         *root = delete_team_balancing(*root, nodeToDelete);
-        printf("Team deleted successfully!\n");
+        printf("Team deleted successfully!\n\n");
     } else {
-        printf("Team not found.\n");
+        printf("Team not found.\n\n");
     }
 }

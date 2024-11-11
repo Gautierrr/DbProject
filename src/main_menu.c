@@ -33,7 +33,7 @@ void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
         printf(" 8. Exit\n");
         printf("=====================================\n\n\n");
 
-        printf("Please choose an option : ");
+        printf("Please choose an option: ");
         
         if (scanf("%d", &option) != 1) {
             while (getchar() != '\n');

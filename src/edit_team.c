@@ -4,7 +4,7 @@ void edit_team(Team** root) {
     getchar();
     char query[50];
     
-    printf("Enter the team ID or name to modify : ");
+    printf("Enter the team ID or name to modify: ");
     fgets(query, sizeof(query), stdin);
     size_t len = strlen(query);
     if (len > 0 && query[len - 1] == '\n') {
@@ -14,17 +14,17 @@ void edit_team(Team** root) {
     Team* teamToModify = search_team(*root, query);
 
     if (teamToModify == NULL) {
-        printf("Team not found.\n");
+        printf("Team not found.\n\n");
         return;
     }
 
     printf("\nCurrent team details :\n");
-    printf("ID : %d\n", teamToModify->id);
-    printf("Name : %s\n", teamToModify->name);
-    printf("Trophies : %d\n", teamToModify->trophies);
-    printf("Wins : %d\n", teamToModify->win);
-    printf("Equalities : %d\n", teamToModify->equality);
-    printf("Defeats : %d\n", teamToModify->defeat);
+    printf("ID: %d\n", teamToModify->id);
+    printf("Name: %s\n", teamToModify->name);
+    printf("Trophies: %d\n", teamToModify->trophies);
+    printf("Wins: %d\n", teamToModify->win);
+    printf("Equalities: %d\n", teamToModify->equality);
+    printf("Defeats: %d\n", teamToModify->defeat);
 
     printf("\nEnter new team name (or press Enter to keep the current): ");
     char newName[50];
@@ -80,5 +80,5 @@ void edit_team(Team** root) {
         }
     }
 
-    printf("Team updated successfully!\n");
+    printf("Team updated successfully!\n\n");
 }

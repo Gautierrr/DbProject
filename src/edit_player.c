@@ -36,7 +36,7 @@ void edit_player(Player** root, Team* rootTeam) {
     }
 
     if (strlen(newTeam) > 0 && search_team(rootTeam, newTeam) == NULL) {
-        printf("Team does not exist. Player's team not modified.\n");
+        printf("Team does not exist. Player's team not modified.\n\n");
     } else if (strlen(newTeam) > 0) {
         strcpy(playerToModify->team, newTeam);
     }

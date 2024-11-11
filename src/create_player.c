@@ -138,13 +138,13 @@ void add_player(Player** root, Team* rootTeam) {
         
         if (nameExist == 0) {
             *root = insert_player(*root, newPlayer);
-            printf("Player added successfully!\n");
+            printf("Player added successfully!\n\n");
         } else {
-            printf("Failed to add player: name already exists.\n");
+            printf("Failed to add player: name already exists.\n\n");
             playerCount--;
             free(newPlayer);
         }
     } else {
-        printf("Failed to create player.\n");
+        printf("Failed to create player.\n\n");
     }
 }

@@ -87,8 +87,8 @@ void delete_player(Player** root) {
     
     if (nodeToDelete != NULL) {
         *root = delete_player_balancing(*root, nodeToDelete);
-        printf("Player deleted successfully!\n");
+        printf("Player deleted successfully!\n\n");
     } else {
-        printf("Player not found.\n");
+        printf("Player not found.\n\n");
     }
 }

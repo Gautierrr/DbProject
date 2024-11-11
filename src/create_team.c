@@ -115,12 +115,12 @@ void add_team(Team** root) {
         
         if (name == 0) {
             *root = insert_team(*root, newTeam);
-            printf("Team added successfully!\n");
+            printf("Team added successfully!\n\n");
         } else {
-            printf("Failed to add team: name already exist.\n");
+            printf("Failed to add team: name already exist.\n\n");
             free(newTeam);
         }
     } else {
-        printf("Failed to create team.\n");
+        printf("Failed to create team.\n\n");
     }
 }
