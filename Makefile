@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS = -g -Wall
 
-EXEC = database
+EXEC = dbHandball
 
 SRC = main.c \
       src/show_championships.c \

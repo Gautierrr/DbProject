@@ -10,17 +10,17 @@
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("\nFor usage instructions, please enter:\n");
-        printf("  database help\n\n");
+        printf("  dbHandball help\n\n");
         return EXIT_FAILURE;
     }
 
     if (strcmp(argv[1], "help") == 0) {
         // program user manual
         printf("\nUsage:\n");
-        printf("  database \"name of championship\"                         -> Create a championship\n");
-        printf("  database \"name of championship\" \"password\"              -> Load a championship\n");
-        printf("  database show                                           -> Show existing championships\n");
-        printf("  database delete \"name of championship\"                  -> Delete an existing championship\n\n");
+        printf("  dbHandball \"name of championship\"                         -> Create a championship\n");
+        printf("  dbHandball \"name of championship\" \"password\"              -> Load a championship\n");
+        printf("  dbHandball show                                           -> Show existing championships\n");
+        printf("  dbHandball delete \"name of championship\"                  -> Delete an existing championship\n\n");
     } else if (strcmp(argv[1], "show") == 0) {
         show_championships();
     } else if (strcmp(argv[1], "delete") == 0) {
