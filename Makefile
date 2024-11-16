@@ -32,9 +32,6 @@ SRC = main.c \
 $(EXEC): $(SRC)
 	$(CC) $(CFLAGS) -o $(EXEC) $(SRC) -lssl -lcrypto
 
-run:
-	./$(EXEC)
-
 valgrind: $(EXEC)
 	valgrind --leak-check=full --track-origins=yes ./$(EXEC) champion3 2> bonus/valgrind/valgrind_output.txt
 
