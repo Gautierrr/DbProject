@@ -1,3 +1,10 @@
+/*
+ * File name     : show_player.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that displays the player selected by the user.
+ */
+
 #include "../main.h"
 
 void show_player(Player** root) {

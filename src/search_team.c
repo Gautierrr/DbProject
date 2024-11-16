@@ -1,3 +1,10 @@
+/*
+ * File name     : search_team.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that allows you to search for a team based on its id or name.
+ */
+
 #include "../main.h"
 
 Team* search_team_by_id(Team* node, size_t id) {
@@ -5,6 +12,7 @@ Team* search_team_by_id(Team* node, size_t id) {
         return node;
     }
 
+    // ordered in ascending order so search based on whether the id is greater or not
     if (id < node->id) {
         return search_team_by_id(node->left, id);
     } else {
@@ -21,6 +29,7 @@ Team* search_team_by_name(Team* node, const char* name) {
         return node;
     }
 
+    // not ordered by name so searches the entire binary tree
     Team* result = search_team_by_name(node->left, name);
     if (result != NULL) {
         return result;

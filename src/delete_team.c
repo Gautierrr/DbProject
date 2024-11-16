@@ -1,5 +1,13 @@
+/*
+ * File name     : delete_team.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that allows you to delete a team while rebalancing its binary tree.
+ */
+
 #include "../main.h"
 
+// returns the smallest node in the subtree
 Team* find_team_min(Team* node) {
     if (node == NULL) {
         return NULL;
@@ -17,6 +25,7 @@ Team* delete_team_balancing(Team* root, Team* nodeToDelete) {
         return root;
     }
 
+    // locate the node to delete
     if (nodeToDelete->id < root->id) {
         root->left = delete_team_balancing(root->left, nodeToDelete);
     } else if (nodeToDelete->id > root->id) {
@@ -33,6 +42,7 @@ Team* delete_team_balancing(Team* root, Team* nodeToDelete) {
             }
             free(temp);
         } else {
+            // the root node takes the values ​​of the node returned by the find_team_min function
             Team* temp = find_team_min(root->right);
             root->id = temp->id;
             strcpy(root->name, temp->name);
@@ -48,6 +58,8 @@ Team* delete_team_balancing(Team* root, Team* nodeToDelete) {
     if (root == NULL) {
         return root;
     }
+
+    // the rest of the function allows to rebalance the tree after the deletion of the node by making single or double rotations of the nodes to the right or to the left
 
     root->height = 1 + max(height_team(root->left), height_team(root->right));
 

@@ -1,3 +1,10 @@
+/*
+ * File name     : menu_player.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that displays the main menu for players management.
+ */
+
 #include "../main.h"
 
 void menu_player(Team** root, Player* rootPlayer, const char* championshipName) {

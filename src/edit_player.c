@@ -1,3 +1,10 @@
+/*
+ * File name     : edit_player.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : This program allows you to modify the attributes ​​of a player.
+ */
+
 #include "../main.h"
 
 void edit_player(Player** root, Team* rootTeam) {
@@ -18,6 +25,7 @@ void edit_player(Player** root, Team* rootTeam) {
         return;
     }
 
+    // displays the current attributes of the selected player
     printf("\nCurrent player details:\n");
     printf("ID: %d\n", playerToModify->id);
     printf("Name: %s\n", playerToModify->name);
@@ -26,6 +34,8 @@ void edit_player(Player** root, Team* rootTeam) {
     printf("Goals: %d\n", playerToModify->goals);
     printf("Assists: %d\n", playerToModify->assists);
     printf("Position: %s\n", playerToModify->position);
+    
+    // a modification of the player is possible for each of the attributes, except the id, if nothing is entered or the value entered is incorrect then this does not modify the attribute in question
 
     printf("\nEnter the ID or name of the new team the player belongs to (or press Enter to keep the current): ");
     char newTeam[50];

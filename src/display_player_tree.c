@@ -1,3 +1,10 @@
+/*
+ * File name     : display_player_tree.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that displays the binary tree of players horizontally.
+ */
+
 #include "../main.h"
 
 void display_player_tree(Player* root, size_t space) {

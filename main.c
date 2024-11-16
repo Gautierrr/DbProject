@@ -1,13 +1,21 @@
+/*
+ * File name     : main.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : This program displays a drawing (logo of my handball club ;) and allows you to create, load, delete or view existing championships.
+ */
+
 #include "main.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("\nFor usage instructions, please enter:\n");
-        printf("  database help\n\n"); // update avec le nom définitif
+        printf("  database help\n\n");
         return EXIT_FAILURE;
     }
 
     if (strcmp(argv[1], "help") == 0) {
+        // program user manual
         printf("\nUsage:\n");
         printf("  database \"name of championship\"                         -> Create a championship\n");
         printf("  database \"name of championship\" \"password\"              -> Load a championship\n");
@@ -25,15 +33,17 @@ int main(int argc, char *argv[]) {
         char filepath[50];
         snprintf(filepath, sizeof(filepath), "db/%s.json.enc", argv[1]);
 
+        // if the championship already exists it is loaded otherwise it is created
         FILE *file = fopen(filepath, "r");
         if (file) {
             fclose(file);
             if (argv[2] == NULL) {
-                printf("To load the championship %s you should enter a password to decrypt this.\n", argv[1]); // refaire la phrase
+                printf("To load the championship %s you should enter a password to decrypt this.\n", argv[1]);
                 return EXIT_FAILURE;
             }
             printf("\n\nLoading championship: %s\n", argv[1]);
             
+            // initialization of the roots of the binary trees
             Team* root = NULL;
             Player* rootPlayer = NULL;
 

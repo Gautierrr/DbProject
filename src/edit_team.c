@@ -1,3 +1,10 @@
+/*
+ * File name     : edit_team.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : This program allows you to modify the attributes ​​of a team.
+ */
+
 #include "../main.h"
 
 void edit_team(Team** root) {
@@ -18,6 +25,7 @@ void edit_team(Team** root) {
         return;
     }
 
+    // displays the current attributes of the selected team
     printf("\nCurrent team details :\n");
     printf("ID: %d\n", teamToModify->id);
     printf("Name: %s\n", teamToModify->name);
@@ -25,6 +33,8 @@ void edit_team(Team** root) {
     printf("Wins: %d\n", teamToModify->win);
     printf("Equalities: %d\n", teamToModify->equality);
     printf("Defeats: %d\n", teamToModify->defeat);
+
+    // a modification of the team is possible for each of the attributes, except the id, if nothing is entered or the value entered is incorrect then this does not modify the attribute in question
 
     printf("\nEnter new team name (or press Enter to keep the current): ");
     char newName[50];

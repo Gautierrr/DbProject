@@ -1,5 +1,14 @@
+/*
+ * File name     : save_to_file.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program to save the 2 binary trees in an encrypted json file.
+ */
+
+
 #include "../main.h"
 
+// write all attributes of a player with json formatting
 void save_player_to_file(Player* player, FILE* file) {
     if (player != NULL) {
         fprintf(file, "            {\n");
@@ -13,6 +22,7 @@ void save_player_to_file(Player* player, FILE* file) {
     }
 }
 
+// recursively traverse all players in the binary tree
 void save_players_to_team(Player* player, const char* teamName, FILE* file, size_t* firstPlayer) {
     if (player == NULL) return;
 
@@ -29,6 +39,7 @@ void save_players_to_team(Player* player, const char* teamName, FILE* file, size
     save_players_to_team(player->right, teamName, file, firstPlayer);
 }
 
+// write all attributes of a team with json formatting and including the players who are part of the team
 void save_team_to_file(Team* team, Player* allPlayers, FILE* file) {
     if (team != NULL) {
         fprintf(file, "    {\n");
@@ -48,6 +59,7 @@ void save_team_to_file(Team* team, Player* allPlayers, FILE* file) {
     }
 }
 
+// recursively traverses all teams in the binary tree
 void save_teams_to_file(Team* root, Player* allPlayers, FILE* file, size_t* firstTeam) {
     if (root == NULL) return;
 
@@ -64,6 +76,7 @@ void save_teams_to_file(Team* root, Player* allPlayers, FILE* file, size_t* firs
     save_teams_to_file(root->right, allPlayers, file, firstTeam);
 }
 
+// write the teams and players to a json file then encrypt it into a new file by calling the encrypt_or_decrypt function and finally delete the uncrypted json file
 void save_all(Team* root, Player* allPlayers, const char* championshipName) {
     char filepath[50];
     snprintf(filepath, sizeof(filepath), "db/%s.json", championshipName);

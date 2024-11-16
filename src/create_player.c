@@ -1,8 +1,16 @@
+/*
+ * File name     : create_player.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program to create a player and insert it into the binary tree while balancing it.
+ */
+
 #include "../main.h"
 
 size_t playerCount = 0;
 
 Player* create_new_player(Team* rootTeam) {
+    // allocates the memory needed to create a player, based on the size of the Player structure
     Player* newPlayer = (Player*)malloc(sizeof(Player));
     if (newPlayer == NULL) {
         printf("Memory allocation failed.\n");
@@ -32,6 +40,7 @@ Player* create_new_player(Team* rootTeam) {
         return NULL;
     }
 
+    // increment a counter to keep a unique id for each player
     playerCount++;
     newPlayer->id = playerCount;
 
@@ -79,6 +88,7 @@ Player* create_new_player(Team* rootTeam) {
     return newPlayer;
 }
 
+// checks if the player name entered by the user already exists
 int check_player_name(Player* node, const char* name) {
     if (node == NULL) {
         return 0;
@@ -100,13 +110,16 @@ Player* insert_player(Player* node, Player* newPlayer) {
         return newPlayer;
     }
 
+    // determines where to insert the new node based on the value of its id
     if (newPlayer->id < node->id) {
         node->left = insert_player(node->left, newPlayer);
     } else if (newPlayer->id > node->id) {
         node->right = insert_player(node->right, newPlayer);
     } else {
         return node;
-    }
+    }    
+
+    // the rest of the function allows to rebalance the tree after adding the new node by performing single or double rotations of the nodes to the right or left
 
     node->height = 1 + max(height_player(node->left), height_player(node->right));
 
@@ -141,7 +154,7 @@ void add_player(Player** root, Team* rootTeam) {
             printf("Player added successfully!\n\n");
         } else {
             printf("Failed to add player: name already exists.\n\n");
-            playerCount--;
+            playerCount--; // decrements the counter because there is an error so the player is not created
             free(newPlayer);
         }
     } else {

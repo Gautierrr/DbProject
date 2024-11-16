@@ -1,3 +1,10 @@
+/*
+ * File name     : main.h
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : File that centralizes all variable declarations and libraries that all programs need to function properly.
+ */
+
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -44,7 +51,6 @@ void create_championship(const char *championshipName);
 void show_championships();
 void delete_championship(const char *championshipName);
 void main_menu(Team** root, Player* rootPlayer, const char* championshipName);
-int file_exist(const char *filepath);
 
 // team
 int height_team(Team* n);
