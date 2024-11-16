@@ -27,12 +27,12 @@ void edit_player(Player** root, Team* rootTeam) {
 
     // displays the current attributes of the selected player
     printf("\nCurrent player details:\n");
-    printf("ID: %d\n", playerToModify->id);
+    printf("ID: %ld\n", playerToModify->id);
     printf("Name: %s\n", playerToModify->name);
     printf("Team: %s\n", playerToModify->team);
-    printf("Age: %d\n", playerToModify->age);
-    printf("Goals: %d\n", playerToModify->goals);
-    printf("Assists: %d\n", playerToModify->assists);
+    printf("Age: %ld\n", playerToModify->age);
+    printf("Goals: %ld\n", playerToModify->goals);
+    printf("Assists: %ld\n", playerToModify->assists);
     printf("Position: %s\n", playerToModify->position);
     
     // a modification of the player is possible for each of the attributes, except the id, if nothing is entered or the value entered is incorrect then this does not modify the attribute in question
@@ -68,7 +68,7 @@ void edit_player(Player** root, Team* rootTeam) {
     printf("Enter new age (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             playerToModify->age = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current age.\n");
@@ -78,7 +78,7 @@ void edit_player(Player** root, Team* rootTeam) {
     printf("Enter new number of goals (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             playerToModify->goals = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current number of goals.\n");
@@ -88,7 +88,7 @@ void edit_player(Player** root, Team* rootTeam) {
     printf("Enter new number of assists (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             playerToModify->assists = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current number of assists.\n");

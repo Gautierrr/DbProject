@@ -18,7 +18,7 @@ void display_team_tree(Team* root, size_t space) {
     printf("\n\n");
     for (size_t i = 10; i < space; i++)
         printf(" ");
-    printf("ID: %d, Name: %s\n", root->id, root->name);
+    printf("ID: %ld, Name: %s\n", root->id, root->name);
 
     display_team_tree(root->left, space);
     printf("\n");

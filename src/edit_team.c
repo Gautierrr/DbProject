@@ -27,12 +27,12 @@ void edit_team(Team** root) {
 
     // displays the current attributes of the selected team
     printf("\nCurrent team details :\n");
-    printf("ID: %d\n", teamToModify->id);
+    printf("ID: %ld\n", teamToModify->id);
     printf("Name: %s\n", teamToModify->name);
-    printf("Trophies: %d\n", teamToModify->trophies);
-    printf("Wins: %d\n", teamToModify->win);
-    printf("Equalities: %d\n", teamToModify->equality);
-    printf("Defeats: %d\n", teamToModify->defeat);
+    printf("Trophies: %ld\n", teamToModify->trophies);
+    printf("Wins: %ld\n", teamToModify->win);
+    printf("Equalities: %ld\n", teamToModify->equality);
+    printf("Defeats: %ld\n", teamToModify->defeat);
 
     // a modification of the team is possible for each of the attributes, except the id, if nothing is entered or the value entered is incorrect then this does not modify the attribute in question
 
@@ -53,7 +53,7 @@ void edit_team(Team** root) {
     printf("Enter new number of trophies (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             teamToModify->trophies = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current number of trophies.\n");
@@ -63,7 +63,7 @@ void edit_team(Team** root) {
     printf("Enter new number of wins (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             teamToModify->win = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current number of wins.\n");
@@ -73,7 +73,7 @@ void edit_team(Team** root) {
     printf("Enter new number of equalities (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             teamToModify->equality = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current number of equalities.\n");
@@ -83,7 +83,7 @@ void edit_team(Team** root) {
     printf("Enter new number of defeats (or press Enter to keep the current): ");
     fgets(input, sizeof(input), stdin);
     if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
-        if (sscanf(input, "%d", &temp) == 1 && temp >= 0) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
             teamToModify->defeat = (size_t)temp;
         } else {
             printf("Invalid input. Keeping the current number of defeats.\n");

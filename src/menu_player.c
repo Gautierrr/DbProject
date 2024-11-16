@@ -22,7 +22,7 @@ void menu_player(Team** root, Player* rootPlayer, const char* championshipName) 
 
         printf("Please choose an option: ");
         
-        if (scanf("%d", &option) != 1) {
+        if (scanf("%hhd", &option) != 1) {
             while (getchar() != '\n');
             option = 0;
         }

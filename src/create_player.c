@@ -54,21 +54,21 @@ Player* create_new_player(Team* rootTeam) {
     int16_t temp;
 
     printf("Enter player age: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative player age: ");
         while (getchar() != '\n');
     }
     newPlayer->age = (size_t)temp;
 
     printf("Enter number of goals: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative number of goals: ");
         while (getchar() != '\n');
     }
     newPlayer->goals = (size_t)temp;
 
     printf("Enter number of assists: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative number of assists: ");
         while (getchar() != '\n');
     }

@@ -26,11 +26,11 @@ void show_team(Team** root) {
     }
 
     printf("\nCurrent team details:\n");
-    printf("\nID: %d\n", displayTeam->id);
+    printf("\nID: %ld\n", displayTeam->id);
     printf("Name: %s\n", displayTeam->name);
-    printf("Trophies: %d\n", displayTeam->trophies);
-    printf("Wins: %d\n", displayTeam->win);
-    printf("Equalities: %d\n", displayTeam->equality);
-    printf("Defeats: %d\n\n", displayTeam->defeat);
+    printf("Trophies: %ld\n", displayTeam->trophies);
+    printf("Wins: %ld\n", displayTeam->win);
+    printf("Equalities: %ld\n", displayTeam->equality);
+    printf("Defeats: %ld\n\n", displayTeam->defeat);
 
 }

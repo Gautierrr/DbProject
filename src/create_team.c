@@ -57,28 +57,28 @@ Team* create_new_team(Team* root) {
     int16_t temp;
 
     printf("Enter number of trophies: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative number of trophies: ");
         while (getchar() != '\n');
     }
     newTeam->trophies = (size_t)temp;
 
     printf("Enter number of wins: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative number of wins: ");
         while (getchar() != '\n');
     }
     newTeam->win = (size_t)temp;
 
     printf("Enter number of equalities: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative number of equalities: ");
         while (getchar() != '\n');
     }
     newTeam->equality = (size_t)temp;
 
     printf("Enter number of defeats: ");
-    while (scanf("%d", &temp) != 1 || temp < 0) {
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
         printf("Invalid input. Please enter a valid non-negative number of defeats: ");
         while (getchar() != '\n');
     }

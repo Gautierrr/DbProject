@@ -12,11 +12,11 @@
 void save_player_to_file(Player* player, FILE* file) {
     if (player != NULL) {
         fprintf(file, "            {\n");
-        fprintf(file, "                \"id\": \"%d\",\n", player->id);
+        fprintf(file, "                \"id\": \"%ld\",\n", player->id);
         fprintf(file, "                \"name\": \"%s\",\n", player->name);
-        fprintf(file, "                \"age\": %d,\n", player->age);
-        fprintf(file, "                \"goals\": %d,\n", player->goals);
-        fprintf(file, "                \"assists\": %d,\n", player->assists);
+        fprintf(file, "                \"age\": %ld,\n", player->age);
+        fprintf(file, "                \"goals\": %ld,\n", player->goals);
+        fprintf(file, "                \"assists\": %ld,\n", player->assists);
         fprintf(file, "                \"position\": \"%s\"\n", player->position);
         fprintf(file, "            }");
     }
@@ -43,12 +43,12 @@ void save_players_to_team(Player* player, const char* teamName, FILE* file, size
 void save_team_to_file(Team* team, Player* allPlayers, FILE* file) {
     if (team != NULL) {
         fprintf(file, "    {\n");
-        fprintf(file, "        \"id\": %d,\n", team->id);
+        fprintf(file, "        \"id\": %ld,\n", team->id);
         fprintf(file, "        \"name\": \"%s\",\n", team->name);
-        fprintf(file, "        \"trophies\": %d,\n", team->trophies);
-        fprintf(file, "        \"win\": %d,\n", team->win);
-        fprintf(file, "        \"equality\": %d,\n", team->equality);
-        fprintf(file, "        \"defeat\": %d,\n", team->defeat);
+        fprintf(file, "        \"trophies\": %ld,\n", team->trophies);
+        fprintf(file, "        \"win\": %ld,\n", team->win);
+        fprintf(file, "        \"equality\": %ld,\n", team->equality);
+        fprintf(file, "        \"defeat\": %ld,\n", team->defeat);
 
         fprintf(file, "        \"players\": [\n");
         size_t firstPlayer = 1;
