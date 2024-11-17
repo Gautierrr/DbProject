@@ -1,5 +1,13 @@
+/*
+ * File name     : main_menu.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that displays the main menu for teams management and for saving binary trees.
+ */
+
 #include "../main.h"
 
+// functions to free the memory of the 2 binary trees
 void free_player_tree(Player* player) {
     if (player == NULL) return;
 
@@ -19,7 +27,7 @@ void free_team_tree(Team* team) {
 }
 
 void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
-    int option;
+    int8_t option;
 
     do {        
         printf("\n============= Main menu =============\n");
@@ -33,9 +41,9 @@ void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
         printf(" 8. Exit\n");
         printf("=====================================\n\n\n");
 
-        printf("Please choose an option : ");
+        printf("Please choose an option: ");
         
-        if (scanf("%d", &option) != 1) {
+        if (scanf("%hhd", &option) != 1) {
             while (getchar() != '\n');
             option = 0;
         }
@@ -60,8 +68,8 @@ void main_menu(Team** root, Player* rootPlayer, const char* championshipName) {
                 menu_player(root, rootPlayer, championshipName);
                 break;
             case 7:
-                save_teams_and_players(*root, rootPlayer, championshipName);
-                /* fall through */
+                // call the save function then go to option 8 to properly exit the program
+                save_all(*root, rootPlayer, championshipName);
             case 8:
                 printf("Bye bye ...\n");
                 free_team_tree(*root);

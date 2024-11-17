@@ -1,3 +1,10 @@
+/*
+ * File name     : edit_player.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : This program allows you to modify the attributes ​​of a player.
+ */
+
 #include "../main.h"
 
 void edit_player(Player** root, Team* rootTeam) {
@@ -18,14 +25,17 @@ void edit_player(Player** root, Team* rootTeam) {
         return;
     }
 
+    // displays the current attributes of the selected player
     printf("\nCurrent player details:\n");
-    printf("ID: %d\n", playerToModify->id);
+    printf("ID: %ld\n", playerToModify->id);
     printf("Name: %s\n", playerToModify->name);
     printf("Team: %s\n", playerToModify->team);
-    printf("Age: %d\n", playerToModify->age);
-    printf("Goals: %d\n", playerToModify->goals);
-    printf("Assists: %d\n", playerToModify->assists);
+    printf("Age: %ld\n", playerToModify->age);
+    printf("Goals: %ld\n", playerToModify->goals);
+    printf("Assists: %ld\n", playerToModify->assists);
     printf("Position: %s\n", playerToModify->position);
+    
+    // a modification of the player is possible for each of the attributes, except the id, if nothing is entered or the value entered is incorrect then this does not modify the attribute in question
 
     printf("\nEnter the ID or name of the new team the player belongs to (or press Enter to keep the current): ");
     char newTeam[50];
@@ -36,7 +46,7 @@ void edit_player(Player** root, Team* rootTeam) {
     }
 
     if (strlen(newTeam) > 0 && search_team(rootTeam, newTeam) == NULL) {
-        printf("Team does not exist. Player's team not modified.\n");
+        printf("Team does not exist. Player's team not modified.\n\n");
     } else if (strlen(newTeam) > 0) {
         strcpy(playerToModify->team, newTeam);
     }
@@ -52,25 +62,37 @@ void edit_player(Player** root, Team* rootTeam) {
         strcpy(playerToModify->name, newName);
     }
 
+    int16_t temp;
+    char input[10];
+
     printf("Enter new age (or press Enter to keep the current): ");
-    char ageInput[10];
-    fgets(ageInput, sizeof(ageInput), stdin);
-    if (strlen(ageInput) > 0 && ageInput[0] != '\n') {
-        playerToModify->age = atoi(ageInput);
+    fgets(input, sizeof(input), stdin);
+    if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
+            playerToModify->age = (size_t)temp;
+        } else {
+            printf("Invalid input. Keeping the current age.\n");
+        }
     }
 
     printf("Enter new number of goals (or press Enter to keep the current): ");
-    char goalsInput[10];
-    fgets(goalsInput, sizeof(goalsInput), stdin);
-    if (strlen(goalsInput) > 0 && goalsInput[0] != '\n') {
-        playerToModify->goals = atoi(goalsInput);
+    fgets(input, sizeof(input), stdin);
+    if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
+            playerToModify->goals = (size_t)temp;
+        } else {
+            printf("Invalid input. Keeping the current number of goals.\n");
+        }
     }
 
     printf("Enter new number of assists (or press Enter to keep the current): ");
-    char assistsInput[10];
-    fgets(assistsInput, sizeof(assistsInput), stdin);
-    if (strlen(assistsInput) > 0 && assistsInput[0] != '\n') {
-        playerToModify->assists = atoi(assistsInput);
+    fgets(input, sizeof(input), stdin);
+    if (strlen(input) > 1 || (input[0] != '\n' && input[0] != '\0')) {
+        if (sscanf(input, "%hd", &temp) == 1 && temp >= 0) {
+            playerToModify->assists = (size_t)temp;
+        } else {
+            printf("Invalid input. Keeping the current number of assists.\n");
+        }
     }
 
     printf("Enter new position (or press Enter to keep the current): ");

@@ -1,6 +1,14 @@
+/*
+ * File name     : delete_team.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that allows you to delete a team while rebalancing its binary tree.
+ */
+
 #include "../main.h"
 
-Team* find_min(Team* node) {
+// returns the smallest node in the subtree
+Team* find_team_min(Team* node) {
     if (node == NULL) {
         return NULL;
     }
@@ -12,15 +20,16 @@ Team* find_min(Team* node) {
     return node;
 }
 
-Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
+Team* delete_team_balancing(Team* root, Team* nodeToDelete) {
     if (root == NULL) {
         return root;
     }
 
+    // locate the node to delete
     if (nodeToDelete->id < root->id) {
-        root->left = delete_team_and_balancing(root->left, nodeToDelete);
+        root->left = delete_team_balancing(root->left, nodeToDelete);
     } else if (nodeToDelete->id > root->id) {
-        root->right = delete_team_and_balancing(root->right, nodeToDelete);
+        root->right = delete_team_balancing(root->right, nodeToDelete);
     } else {
         if (root->left == NULL || root->right == NULL) {
             Team* temp = root->left ? root->left : root->right;
@@ -33,7 +42,8 @@ Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
             }
             free(temp);
         } else {
-            Team* temp = find_min(root->right);
+            // the root node takes the values ​​of the node returned by the find_team_min function
+            Team* temp = find_team_min(root->right);
             root->id = temp->id;
             strcpy(root->name, temp->name);
             root->trophies = temp->trophies;
@@ -41,7 +51,7 @@ Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
             root->equality = temp->equality;
             root->defeat = temp->defeat;
 
-            root->right = delete_team_and_balancing(root->right, temp);
+            root->right = delete_team_balancing(root->right, temp);
         }
     }
 
@@ -49,9 +59,11 @@ Team* delete_team_and_balancing(Team* root, Team* nodeToDelete) {
         return root;
     }
 
+    // the rest of the function allows to rebalance the tree after the deletion of the node by making single or double rotations of the nodes to the right or to the left
+
     root->height = 1 + max(height_team(root->left), height_team(root->right));
 
-    int balance = get_balance_team(root);
+    int8_t balance = get_balance_team(root);
 
     if (balance > 1 && get_balance_team(root->left) >= 0) {
         return right_rotate_team(root);
@@ -85,9 +97,9 @@ void delete_team(Team** root) {
     Team* nodeToDelete = search_team(*root, query);
     
     if (nodeToDelete != NULL) {
-        *root = delete_team_and_balancing(*root, nodeToDelete);
-        printf("Team deleted successfully!\n");
+        *root = delete_team_balancing(*root, nodeToDelete);
+        printf("Team deleted successfully!\n\n");
     } else {
-        printf("Team not found.\n");
+        printf("Team not found.\n\n");
     }
 }

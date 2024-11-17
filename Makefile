@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS = -g -Wall
 
-EXEC = database
+EXEC = dbHandball
 
 SRC = main.c \
       src/show_championships.c \
@@ -24,6 +24,7 @@ SRC = main.c \
       src/edit_player.c \
       src/delete_player.c \
       src/display_player_tree.c \
+      src/encrypt_or_decrypt.c \
       src/save_to_file.c \
       src/load_file.c \
       cJSON.c
@@ -31,11 +32,8 @@ SRC = main.c \
 $(EXEC): $(SRC)
 	$(CC) $(CFLAGS) -o $(EXEC) $(SRC) -lssl -lcrypto
 
-run:
-	./$(EXEC)
-
 valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes ./$(EXEC) champion3 2> bonus/valgrind/valgrind_output.txt
+	valgrind --leak-check=full --track-origins=yes ./$(EXEC) test 2> valgrind/valgrind_output.txt
 
 clean:
 	rm -f $(EXEC)

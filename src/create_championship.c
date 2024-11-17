@@ -1,19 +1,18 @@
+/*
+ * File name     : create_championship.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : This program creates a new json file with the name of the new championship.
+ */
+
 #include "../main.h"
 
-int file_exist(const char *filepath) {
-    FILE *file = fopen(filepath, "r");
-    if (file != NULL) {
-        fclose(file);
-        return 1;
-    }
-    return 0;
-}
-
+// create a json save file with the championship name entered by the user
 void create_json_file(const char *championshipName) {
     const char *directory = "db";
     char filepath[30];
 
-    // db/name.json
+    // file path in the form : db/"name of championship".json
     snprintf(filepath, sizeof(filepath), "%s/%s.json", directory, championshipName);
 
     FILE *file = fopen(filepath, "w");
@@ -29,9 +28,7 @@ void create_json_file(const char *championshipName) {
 
 
 void create_championship(const char *championshipName) {
-    char filepath[50];
-    snprintf(filepath, sizeof(filepath), "db/%s.json", championshipName);
-
+    // initialization of the roots of the binary trees
     Team* root = NULL;
     Player* rootPlayer = NULL;
 

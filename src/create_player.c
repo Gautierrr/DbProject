@@ -1,8 +1,16 @@
+/*
+ * File name     : create_player.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program to create a player and insert it into the binary tree while balancing it.
+ */
+
 #include "../main.h"
 
-int playerCount = 0;
+size_t playerCount = 0;
 
 Player* create_new_player(Team* rootTeam) {
+    // allocates the memory needed to create a player, based on the size of the Player structure
     Player* newPlayer = (Player*)malloc(sizeof(Player));
     if (newPlayer == NULL) {
         printf("Memory allocation failed.\n");
@@ -10,8 +18,7 @@ Player* create_new_player(Team* rootTeam) {
     }
 
     getchar();
-
-    printf("Enter the name of the team the player belongs to : ");
+    printf("Enter the name of the team the player belongs to: ");
     fgets(newPlayer->team, sizeof(newPlayer->team), stdin);
     size_t len = strlen(newPlayer->team);
     if (len > 0 && newPlayer->team[len - 1] == '\n') {
@@ -21,7 +28,7 @@ Player* create_new_player(Team* rootTeam) {
     char* notNb;
     strtol(newPlayer->team, &notNb, 10);
     if (*notNb == '\0' && notNb != newPlayer->team) {
-        printf("Error: The team name cannot be a number. Please enter a valid name.\n");
+        printf("Error: the team name cannot be a number. Please enter a valid name.\n");
         free(newPlayer);
         return NULL;
     }
@@ -32,6 +39,7 @@ Player* create_new_player(Team* rootTeam) {
         return NULL;
     }
 
+    // increment a counter to keep a unique id for each player
     playerCount++;
     newPlayer->id = playerCount;
 
@@ -42,23 +50,28 @@ Player* create_new_player(Team* rootTeam) {
         newPlayer->name[len - 1] = '\0';
     }
 
+    int16_t temp;
+
     printf("Enter player age: ");
-    while (scanf("%d", &newPlayer->age) != 1) {
-        printf("Invalid input. Please enter a valid player age: ");
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative player age: ");
         while (getchar() != '\n');
     }
+    newPlayer->age = (size_t)temp;
 
     printf("Enter number of goals: ");
-    while (scanf("%d", &newPlayer->goals) != 1) {
-        printf("Invalid input. Please enter a valid number of goals: ");
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of goals: ");
         while (getchar() != '\n');
     }
+    newPlayer->goals = (size_t)temp;
 
     printf("Enter number of assists: ");
-    while (scanf("%d", &newPlayer->assists) != 1) {
-        printf("Invalid input. Please enter a valid number of assists: ");
+    while (scanf("%hd", &temp) != 1 || temp < 0) {
+        printf("Invalid input. Please enter a valid non-negative number of assists: ");
         while (getchar() != '\n');
     }
+    newPlayer->assists = (size_t)temp;
     getchar();
 
     printf("Enter player position: ");
@@ -74,6 +87,7 @@ Player* create_new_player(Team* rootTeam) {
     return newPlayer;
 }
 
+// checks if the player name entered by the user already exists
 int check_player_name(Player* node, const char* name) {
     if (node == NULL) {
         return 0;
@@ -95,17 +109,20 @@ Player* insert_player(Player* node, Player* newPlayer) {
         return newPlayer;
     }
 
+    // determines where to insert the new node based on the value of its id
     if (newPlayer->id < node->id) {
         node->left = insert_player(node->left, newPlayer);
     } else if (newPlayer->id > node->id) {
         node->right = insert_player(node->right, newPlayer);
     } else {
         return node;
-    }
+    }    
+
+    // the rest of the function allows to rebalance the tree after adding the new node by performing single or double rotations of the nodes to the right or left
 
     node->height = 1 + max(height_player(node->left), height_player(node->right));
 
-    int balance = get_balance_player(node);
+    int8_t balance = get_balance_player(node);
 
     if (balance > 1 && newPlayer->id < node->left->id)
         return right_rotate_player(node);
@@ -129,17 +146,17 @@ Player* insert_player(Player* node, Player* newPlayer) {
 void add_player(Player** root, Team* rootTeam) {
     Player* newPlayer = create_new_player(rootTeam);
     if (newPlayer != NULL) {
-        int nameExist = check_player_name(*root, newPlayer->name);
+        int8_t nameExist = check_player_name(*root, newPlayer->name);
         
         if (nameExist == 0) {
             *root = insert_player(*root, newPlayer);
-            printf("Player added successfully!\n");
+            printf("Player added successfully!\n\n");
         } else {
-            printf("Failed to add player: Name already exists.\n");
-            playerCount--;
+            printf("Failed to add player: name already exists.\n\n");
+            playerCount--; // decrements the counter because there is an error so the player is not created
             free(newPlayer);
         }
     } else {
-        printf("Failed to create player.\n");
+        printf("Failed to create player.\n\n");
     }
 }

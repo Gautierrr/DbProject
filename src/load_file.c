@@ -1,43 +1,14 @@
+/*
+ * File name     : load_file.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program to load the 2 binary trees into memory from a json file by decrypting it first.
+ */
+
 #include "../main.h"
 
-// Revoir toute cette partie
-void decrypt_file(const char *input_filepath, const char *output_filepath, const char *password) {
-    unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
-
-    EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
-    
-    FILE *infile = fopen(input_filepath, "rb");
-    FILE *outfile = fopen(output_filepath, "wb");
-    
-    if (!infile || !outfile) {
-        perror("File open error");
-        return;
-    }
-
-    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv);
-    
-    unsigned char buffer[1024];
-    unsigned char plaintext[1024 + EVP_MAX_BLOCK_LENGTH];
-    int len;
-
-    while (1) {
-        size_t bytes_read = fread(buffer, 1, sizeof(buffer), infile);
-        if (bytes_read <= 0) break;
-
-        EVP_DecryptUpdate(ctx, plaintext, &len, buffer, bytes_read);
-        fwrite(plaintext, 1, len, outfile);
-    }
-
-    EVP_DecryptFinal_ex(ctx, plaintext, &len);
-    fwrite(plaintext, 1, len, outfile);
-    
-    EVP_CIPHER_CTX_free(ctx);
-    fclose(infile);
-    fclose(outfile);
-}
-
-Team* create_team_node(int id, const char* name, int trophies, int win, int equality, int defeat) {
+// create a node with the attributes of the team passed as an argument
+Team* create_team_node(size_t id, const char* name, size_t trophies, size_t win, size_t equality, size_t defeat) {
     Team* team = (Team*)malloc(sizeof(Team));
     team->id = id;
     strncpy(team->name, name, sizeof(team->name) - 1);
@@ -51,7 +22,8 @@ Team* create_team_node(int id, const char* name, int trophies, int win, int equa
     return team;
 }
 
-Player* create_player_node(int id, const char* name, int age, int goals, int assists, const char* position, const char* team_name) {
+// create a node with the attributes of the player passed as an argument
+Player* create_player_node(size_t id, const char* name, size_t age, size_t goals, size_t assists, const char* position, const char* team_name) {
     Player* player = (Player*)malloc(sizeof(Player));
     player->id = id;
     strncpy(player->name, name, sizeof(player->name) - 1);
@@ -69,12 +41,13 @@ Player* create_player_node(int id, const char* name, int age, int goals, int ass
 }
 
 void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipName, const char* password) {
+    // decrypt the file
     char filepath[50];
     snprintf(filepath, sizeof(filepath), "db/%s.json.enc", championshipName);
     char decryptedFilepath[50];
     snprintf(decryptedFilepath, sizeof(decryptedFilepath), "db/%s_decrypted.json", championshipName);
 
-    decrypt_file(filepath, decryptedFilepath, password);
+    encrypt_or_decrypt(filepath, decryptedFilepath, password, 2);
 
     FILE* file = fopen(decryptedFilepath, "r");
     if (file == NULL) {
@@ -86,13 +59,13 @@ void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipNam
     long fileSize = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    char* jsonData = (char*)malloc(fileSize + 1);
-    fread(jsonData, 1, fileSize, file);
+    char* jsonData = (char*)malloc(fileSize + 1); // loading data into memory based on file size
+    fread(jsonData, 1, fileSize, file);           // file contents in jsonData
     fclose(file);
 
     jsonData[fileSize] = '\0';
 
-    cJSON* rootJson = cJSON_Parse(jsonData);
+    cJSON* rootJson = cJSON_Parse(jsonData); // parsing the json file with cJSON
     if (rootJson == NULL) {
         printf("Error parsing JSON\n");
         free(jsonData);
@@ -107,20 +80,21 @@ void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipNam
         return;
     }
 
-    int maxTeamId = 0;
-    int maxPlayerId = 0;
+    size_t maxTeamId = 0;
+    size_t maxPlayerId = 0;
     cJSON* teamJson;
 
+    // loop through the array to retrieve each team's data
     cJSON_ArrayForEach(teamJson, teamsJson) {
-        int id = cJSON_GetObjectItem(teamJson, "id")->valueint;
+        size_t id = cJSON_GetObjectItem(teamJson, "id")->valueint;
         if (id > maxTeamId) {
             maxTeamId = id;
         }
         const char* name = cJSON_GetObjectItem(teamJson, "name")->valuestring;
-        int trophies = cJSON_GetObjectItem(teamJson, "trophies")->valueint;
-        int win = cJSON_GetObjectItem(teamJson, "win")->valueint;
-        int equality = cJSON_GetObjectItem(teamJson, "equality")->valueint;
-        int defeat = cJSON_GetObjectItem(teamJson, "defeat")->valueint;
+        size_t trophies = cJSON_GetObjectItem(teamJson, "trophies")->valueint;
+        size_t win = cJSON_GetObjectItem(teamJson, "win")->valueint;
+        size_t equality = cJSON_GetObjectItem(teamJson, "equality")->valueint;
+        size_t defeat = cJSON_GetObjectItem(teamJson, "defeat")->valueint;
 
         Team* team = create_team_node(id, name, trophies, win, equality, defeat);
         *rootTeam = insert_team(*rootTeam, team);
@@ -128,12 +102,13 @@ void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipNam
         cJSON* playersJson = cJSON_GetObjectItem(teamJson, "players");
         if (cJSON_IsArray(playersJson)) {
             cJSON* playerJson;
+            // loop through the array to retrieve each player's data
             cJSON_ArrayForEach(playerJson, playersJson) {
-                int playerId = atoi(cJSON_GetObjectItem(playerJson, "id")->valuestring);
+                size_t playerId = atoi(cJSON_GetObjectItem(playerJson, "id")->valuestring);
                 const char* playerName = cJSON_GetObjectItem(playerJson, "name")->valuestring;
-                int age = cJSON_GetObjectItem(playerJson, "age")->valueint;
-                int goals = cJSON_GetObjectItem(playerJson, "goals")->valueint;
-                int assists = cJSON_GetObjectItem(playerJson, "assists")->valueint;
+                size_t age = cJSON_GetObjectItem(playerJson, "age")->valueint;
+                size_t goals = cJSON_GetObjectItem(playerJson, "goals")->valueint;
+                size_t assists = cJSON_GetObjectItem(playerJson, "assists")->valueint;
                 const char* position = cJSON_GetObjectItem(playerJson, "position")->valuestring;
 
                 if (playerId > maxPlayerId) {

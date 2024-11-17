@@ -1,12 +1,20 @@
+/*
+ * File name     : player_balancing.c
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : Program that defines the functions allowing the rebalancing of the binary tree of players by making rotations as soon as the gap between the levels of the tree is greater than 1.
+ */
+
 #include "../main.h"
 
-// voir pour la fonction max
+// calculates the height of a node
 int height_player(Player* n) {
     if (n == NULL)
         return 0;
     return n->height;
 }
 
+// if the tree is "leaning" to the left, that is to say that the left part of the tree is 2 floors larger than the right part, then we perform a rotation to the right to rebalance it
 Player* right_rotate_player(Player* y) {
     Player* x = y->left;
     Player* temp = x->right;
@@ -20,6 +28,7 @@ Player* right_rotate_player(Player* y) {
     return x;
 }
 
+// same but this time the tree is too "leaning" to the right so we rotate it to the left to rebalance it
 Player* left_rotate_player(Player* x) {
     Player* y = x->right;
     Player* temp = y->left;
@@ -33,6 +42,7 @@ Player* left_rotate_player(Player* x) {
     return y;
 }
 
+// calculate the height difference between the right and left parts of the tree
 int get_balance_player(Player* n) {
     if (n == NULL)
         return 0;

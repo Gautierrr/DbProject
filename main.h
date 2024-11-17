@@ -1,3 +1,10 @@
+/*
+ * File name     : main.h
+ * Author        : Gautier Vauloup
+ * Date          : November 16, 2024
+ * Description   : File that centralizes all variable declarations and libraries that all programs need to function properly.
+ */
+
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -9,64 +16,57 @@
 #include "cJSON.h"
 #include <openssl/evp.h>
 #include <openssl/rand.h>
-
-typedef struct Championship {
-    char name[20];
-} Championship;
-
 typedef struct Player {
-    int id;
+    size_t id;
     char name[20];
     char team[30];
-    int age;
-    int goals;
-    int assists;
+    size_t age;
+    size_t goals;
+    size_t assists;
     char position[10];
     struct Player* left;
     struct Player* right;
-    int height;
+    size_t height;
 } Player;
 
 typedef struct Team {
-    int id;
+    size_t id;
     char name[30];
-    int trophies;
-    int win;
-    int equality;
-    int defeat;
+    size_t trophies;
+    size_t win;
+    size_t equality;
+    size_t defeat;
     struct Team* left;
     struct Team* right;
-    int height;
+    size_t height;
 } Team;
 
-int max(int a, int b);
-extern int teamCount;
-extern int playerCount;
+int max(size_t a, size_t b);
+extern size_t teamCount;
+extern size_t playerCount;
 
 // championship
 void create_championship(const char *championshipName);
 void show_championships();
 void delete_championship(const char *championshipName);
-void main_menu(Team** root, Player* rootPlayer, const char* championship_file);
-int file_exist(const char *filepath);
+void main_menu(Team** root, Player* rootPlayer, const char* championshipName);
 
 // team
 int height_team(Team* n);
 Team* create_new_team();
-Team* insert_team(Team* node, Team* new_team);
+Team* insert_team(Team* node, Team* newTeam);
 void add_team(Team** root);
 Team* right_rotate_team(Team* y);
 Team* left_rotate_team(Team* x);
 int get_balance_team(Team* n);
-void display_team_tree(Team* root, int space);
+void display_team_tree(Team* root, size_t space);
 Team* search_team(Team* root, const char* query);
 void delete_team(Team** root);
 void edit_team(Team** root);
 void show_team(Team** root);
-Team* insert_team(Team* node, Team* new_team);
 
 // player
-void menu_player(Team** root, Player* rootPlayer, const char* championship_file);
+void menu_player(Team** root, Player* rootPlayer, const char* championshipName);
 void add_player(Player** root, Team* rootTeam);
 int height_player(Player* n);
 Player* right_rotate_player(Player* y);
@@ -76,15 +76,12 @@ Player* search_player(Player* root, const char* query);
 void show_player(Player** root);
 void delete_player(Player** root);
 void edit_player(Player** root, Team* rootTeam);
-void display_player_tree(Player* root, int space);
-Player* insert_player(Player* node, Player* new_player);
-
-
-
+void display_player_tree(Player* root, size_t space);
+Player* insert_player(Player* node, Player* newPlayer);
 
 // save & load
-void save_teams_and_players(Team* root, Player* all_players, const char* championship_file);
-void load_file(Team** root_team, Player** root_player, const char* filename, const char* password);
-
+void encrypt_or_decrypt(const char *inputFilepath, const char *outputFilepath, const char *password, const size_t value);
+void save_all(Team* root, Player* allPlayers, const char* championshipName);
+void load_file(Team** rootTeam, Player** rootPlayer, const char* championshipName, const char* password);
 
 #endif
