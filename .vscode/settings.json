@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "main.h": "c",
-        "typeinfo": "c",
-        "dirent.h": "c",
-        "evp.h": "c",
-        "rand.h": "c"
-    }
-}
