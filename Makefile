@@ -32,6 +32,7 @@ SRC = main.c \
 $(EXEC): $(SRC)
 	$(CC) $(CFLAGS) -o $(EXEC) $(SRC) -lssl -lcrypto
 
+# remember to modify "test" if you want to create several championships with valgrind
 valgrind: $(EXEC)
 	valgrind --leak-check=full --track-origins=yes ./$(EXEC) test 2> valgrind/valgrind_output.txt
 
