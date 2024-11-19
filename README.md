@@ -1,5 +1,6 @@
 ﻿﻿
-# Bienvenue sur DbHandball !!! Gautier VAULOUP 3SI5
+# Bienvenue sur DbHandball !!!
+# Gautier VAULOUP 3SI5
 
 ![DbHandball](logo.png)
 
